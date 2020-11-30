@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { GalleryController } from './user-interface/gallery.controller';
-import { GalleryService } from './gallery.service';
+import { GalleryController } from './controllers/gallery.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Gallery } from './entities/gallery';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Gallery])],
   controllers: [GalleryController],
-  providers: [GalleryService]
+  providers: [],
 })
 export class GalleryModule {}
