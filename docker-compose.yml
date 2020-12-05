@@ -8,8 +8,6 @@ services:
     build: .
     ports:
     - "${APP_PORT}:${APP_PORT}"
-    environment:
-      - MONGODB_URI=mongodb://db_mongo/decisions
     volumes:
     - .:/data/app
     - /data/app/node_modules
