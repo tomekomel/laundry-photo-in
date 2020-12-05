@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Gallery } from '../entities/gallery';
+import { Gallery } from '../entities/gallery.entity';
 
 @Injectable()
 export class GalleryService {

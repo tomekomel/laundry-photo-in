@@ -19,7 +19,7 @@ services:
     image: mysql:5.7
     container_name: ${DB_HOST}
     volumes:
-      - ./database/data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     ports:
       - "${DB_PORT}:${DB_PORT}"
     environment:
@@ -40,3 +40,6 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       PMA_HOST: ${DB_HOST}
       PMA_PORT: ${DB_PORT}
+
+volumes:
+  dbdata:

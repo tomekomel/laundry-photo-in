@@ -19,7 +19,7 @@ import { UserModule } from './user/user.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: ['./src/**/*.entity.ts'],
+        autoLoadEntities: true,
         synchronize: configService.get<boolean>('DB_SYNCHRONIZE'),
       }),
       inject: [ConfigService],
