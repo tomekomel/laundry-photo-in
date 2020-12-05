@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Gallery } from '../entities/gallery.entity';
+import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 
 @Injectable()
 export class GalleryService {
@@ -21,5 +22,9 @@ export class GalleryService {
 
   async delete(id: string): Promise<void> {
     await this.galleryRepository.delete(id);
+  }
+
+ async save(createGalleryDto: CreateGalleryDto) {
+    await this.galleryRepository.save(createGalleryDto);
   }
 }
