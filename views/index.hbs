@@ -1,11 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <title>Blogdrama template--Spectre.css</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spectre.css blog template">
+    <meta name="keywords" content="spectre.css, blog, template">
     <link rel="stylesheet" href="spectre.css">
-    <title>App</title>
+    <link rel="stylesheet" href="spectre-exp.css">
+    <link rel="stylesheet" href="spectre-icons.css">
 </head>
 <body>
-<h1>{{ message }}</h1>
+<div class="container">
+    <div class="columns">
+        <div class="column col-2 col-sm-12 float-right bg-dark text-light titlecol">
+            <h3><i class="icon icon-message text-success"></i></h3>
+            <div class="divider" style="padding-top: 1em;"></div>
+            <h3>Notes</h3>
+            <h4>From the edge</h4>
+        </div>
+
+        <div class="column col-10 col-sm-12 float-left">
+            <h1 class="text-primary">{{ message }}</h1>
+            <h2>Dramatic, simple 2-column responsive blog</h2>
+            <p>When the web page narrows the left column moves over the right column, thanks
+                to <samp>col-sm-12</samp> and  <samp>float-right</samp>.</p>
+
+            <p>This should be the completed version of blogdrama, which should not
+                be a standalone example.
+            </p>
+
+        </div>
+
+    </div>
+</div>
 </body>
-</html>
