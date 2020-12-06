@@ -16,14 +16,14 @@
     <div class="columns">
         <div class="column col-12">
             <h1>laundryphoto.in</h1>
-            <form>
+            <form action="login" method="post">
                 <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
-                    <input class="form-input" id="email" type="text" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,14}$">
+                    <label class="form-label" for="username">Login</label>
+                    <input class="form-input" id="username" type="text">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input class="form-input" id="password" type="password" placeholder="Password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$">
+                    <input class="form-input" id="password" type="password" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label class="form-checkbox">
@@ -31,7 +31,7 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary">Login</button>
+                    <button class="btn btn-primary" type="submit">Login</button>
                 </div>
             </form>
         </div>
