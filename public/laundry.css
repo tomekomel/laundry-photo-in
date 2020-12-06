@@ -8,3 +8,5 @@ body, h1, h2, p { font-family: 'JetBrains Mono', monospace; }
 .main {
     padding: 30px;
 }
+.login { padding-top: 150px }
+.login h1 { margin-bottom: 40px }
