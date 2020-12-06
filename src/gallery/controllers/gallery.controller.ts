@@ -14,7 +14,7 @@ export class GalleryController {
   @Get()
   @Render('galleries')
   async getGalleries() {
-    return { message: 'Galeria', galleries: await this.galleryService.findAll() };
+    return { galleries: await this.galleryService.findAll() };
   }
 
   @Get('/:id')

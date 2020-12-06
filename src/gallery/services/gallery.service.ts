@@ -18,7 +18,7 @@ export class GalleryService {
       id: gallery.id,
       title: gallery.title,
       description: gallery.description,
-      created: gallery.created,
+      created: gallery.created.toLocaleString('pl-PL'),
     }));
   }
 

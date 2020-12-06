@@ -13,5 +13,5 @@ export class GalleryDto {
   description: string;
 
   @IsString()
-  created: Date;
+  created: string;
 }

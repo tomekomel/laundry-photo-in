@@ -15,7 +15,7 @@
             <div class="main">
                 <h1>{{ message }}</h1>
                 {{#each galleries}}
-                    <li>{{this.title}}</li>
+                    <li>{{this.title}} ({{this.id}}) - {{this.created}}</li>
                 {{/each}}
             </div>
         </div>
