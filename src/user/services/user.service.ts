@@ -19,6 +19,10 @@ export class UserService {
     return this.userRepository.findOne(id);
   }
 
+  findOneByName(name: string): Promise<User> {
+    return this.userRepository.findOne({ name });
+  }
+
   async create(user: CreateUserDto) {
     await this.userRepository.save(user);
   }
