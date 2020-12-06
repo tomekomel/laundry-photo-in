@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Laundry Photos Hub</title>
+    {{> headers }}
+</head>
+<body>
+<div class="container">
+    <div class="columns">
+        <div class="column col-2 bg-dark">
+            {{> sidebar }}
+        </div>
+
+        <div class="column col-10">
+            <div class="main">
+                <h1>{{ message }}</h1>
+                {{#each galleries}}
+                    <li>{{this.title}}</li>
+                {{/each}}
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>

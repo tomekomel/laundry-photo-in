@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Render } from '@nestjs/common';
 import { GalleryService } from '../services/gallery.service';
 import { CreateGalleryDto } from '../dtos/create-gallery.dto';
-import { GalleryDto } from '../dtos/gallery.dto';
 
 @Controller('galleries')
 export class GalleryController {
@@ -13,8 +12,9 @@ export class GalleryController {
   }
 
   @Get()
-  getGalleries() {
-    return this.galleryService.findAll();
+  @Render('galleries')
+  async getGalleries() {
+    return { message: 'Galeria', galleries: await this.galleryService.findAll() };
   }
 
   @Get('/:id')
