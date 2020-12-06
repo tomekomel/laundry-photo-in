@@ -13,8 +13,9 @@ async function bootstrap() {
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  hbs.registerPartials(join(__dirname, '..', 'views' , 'partials'));
   app.setViewEngine('hbs');
+
+  hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
 
   await app.listen(config.get('APP_PORT'));
 }

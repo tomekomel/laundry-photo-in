@@ -1,0 +1,10 @@
+body, h1, h2, p { font-family: 'JetBrains Mono', monospace; }
+
+.sidebar {
+    padding: 15px;
+}
+.long {
+}
+.main {
+    padding: 30px;
+}
