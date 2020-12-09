@@ -1,25 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Laundry Photos Hub</title>
-    {{> headers }}
-</head>
-<body>
-<div class="container">
-    <div class="columns">
-        <div class="column col-2 bg-dark">
-            {{> sidebar }}
-        </div>
-
-        <div class="column col-10">
-            <div class="main">
-                <h1>Gallery</h1>
-                {{#each galleries}}
-                    <li>{{this.title}} ({{this.id}}) - {{this.created}}</li>
-                {{/each}}
-            </div>
-        </div>
-
-    </div>
-</div>
-</body>
+<h1>Gallery</h1>
+{{#each galleries}}
+    <li>{{this.title}} ({{this.id}}) - {{this.created}}</li>
+{{/each}}
