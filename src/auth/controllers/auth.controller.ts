@@ -17,8 +17,8 @@ import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter
 export class AuthController {
   @Get('login')
   @Render('login')
-  async (@Request() req): { message: string } {
-    return { message: req.flash('loginError') };
+  async (@Request() req): { message: string, userId: string } {
+    return { message: req.flash('loginError'), userId: req.user ? req.user.id : 0 };
   }
 
   @UseGuards(LoginGuard)

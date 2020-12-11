@@ -4,26 +4,30 @@
             <h1>laundryphoto.in</h1>
             <br />
             <br />
-            <span class="mdl-textfield__error">{{ message }}</span>
-            <form action="login" method="post">
-                <div class="form-group">
-                    <label class="form-label" for="username">Login</label>
-                    <input class="form-input" id="username" name="username" type="text">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-input" id="password" name="password" type="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label class="form-checkbox">
-                        <input type="checkbox"><i class="form-icon"></i> Remember me
-                    </label>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Login</button>
-                    <a class="btn" href="/">Back</a>
-                </div>
+            {{#if userId}}
+                <h3>You are logged in.</h3>
+            {{else}}
+                <span class="mdl-textfield__error">{{ message }}</span>
+                <form action="login" method="post">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Login</label>
+                        <input class="form-input" id="username" name="username" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-input" id="password" name="password" type="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-checkbox">
+                            <input type="checkbox"><i class="form-icon"></i> Remember me
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="btn" href="/">Back</a>
+                    </div>
             </form>
+            {{/if}}
         </div>
     </div>
 </div>
