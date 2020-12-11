@@ -7,7 +7,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { LoginGuard } from '../guards/login.guard';
 import { Response } from 'express';
 
 @Controller('auth')
@@ -18,14 +18,15 @@ export class AuthController {
     return;
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LoginGuard)
   @Post('login')
-  async login(@Request() req) {
-    return req.user;
+  async login(@Res() res: Response) {
+    res.redirect('/users/profile');
   }
 
   @Get('/logout')
-  logout(@Res() res: Response): void {
+  logout(@Request() req, @Res() res: Response): void {
+    req.logout();
     res.redirect('/');
   }
 }
