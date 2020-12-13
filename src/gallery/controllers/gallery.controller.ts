@@ -7,8 +7,14 @@ export class GalleryController {
   constructor(private readonly galleryService: GalleryService) {}
 
   @Post()
-  createGallery(@Body() createGalleryDto: CreateGalleryDto) {
+  saveGallery(@Body() createGalleryDto: CreateGalleryDto) {
     this.galleryService.save(createGalleryDto);
+  }
+
+  @Get('create')
+  @Render('create-gallery')
+  async createGallery() {
+    return { galleries: await this.galleryService.findAll() };
   }
 
   @Get()

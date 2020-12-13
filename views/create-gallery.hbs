@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="columns">
+        <div class="column col-3">
+            <h1>Add new gallery</h1>
+            <br />
+            <br />
+
+            <span class="mdl-textfield__error">{{ message }}</span>
+            <form action="galleries" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-input" id="title" name="title" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="description">Gallery description</label>
+                    <textarea class="form-input" id="description" name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Add</button>
+                    <a class="btn" href="/">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

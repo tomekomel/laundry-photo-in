@@ -27,7 +27,7 @@ export class AuthController {
     res.redirect('/users/profile');
   }
 
-  @Get('/logout')
+  @Get('logout')
   logout(@Request() req, @Res() res: Response): void {
     req.logout();
     res.redirect('/');
