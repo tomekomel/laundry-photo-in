@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Gallery } from './gallery.entity';
 
 @Entity()
 export class Country {
@@ -10,4 +11,7 @@ export class Country {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Gallery, (gallery) => gallery.country, { nullable: true })
+  galleries: Gallery[];
 }

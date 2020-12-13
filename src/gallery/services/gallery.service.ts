@@ -18,6 +18,7 @@ export class GalleryService {
       id: gallery.id,
       title: gallery.title,
       description: gallery.description,
+      countryId: gallery.country ? gallery.country.id : null,
       created: gallery.created.toLocaleString('pl-PL'),
     }));
   }
@@ -31,6 +32,7 @@ export class GalleryService {
   }
 
   async save(createGalleryDto: CreateGalleryDto) {
+    console.log(createGalleryDto);
     await this.galleryRepository.save(createGalleryDto);
   }
 }

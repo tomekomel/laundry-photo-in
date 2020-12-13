@@ -1,20 +1,24 @@
-import { Body, Controller, Get, Param, Post, Render } from '@nestjs/common';
+import { Controller, Get, Param, Post, Render, Req } from '@nestjs/common';
 import { GalleryService } from '../services/gallery.service';
-import { CreateGalleryDto } from '../dtos/create-gallery.dto';
+import { CountryService } from '../services/country.service';
+import { Request } from 'express';
 
 @Controller('galleries')
 export class GalleryController {
-  constructor(private readonly galleryService: GalleryService) {}
+  constructor(
+    private readonly galleryService: GalleryService,
+    private readonly countryService: CountryService,
+  ) {}
 
   @Post()
-  saveGallery(@Body() createGalleryDto: CreateGalleryDto) {
-    this.galleryService.save(createGalleryDto);
+  saveGallery(@Req() request: Request) {
+    this.galleryService.save(request.body);
   }
 
   @Get('create')
   @Render('create-gallery')
   async createGallery() {
-    return { galleries: await this.galleryService.findAll() };
+    return { countries: await this.countryService.findAll() };
   }
 
   @Get()

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GalleryDto {
   @IsNumber()
@@ -7,6 +7,10 @@ export class GalleryDto {
   @IsNotEmpty()
   @IsString()
   title: string;
+
+  @IsNumber()
+  @IsOptional()
+  countryId: number | null;
 
   @IsNotEmpty()
   @IsString()

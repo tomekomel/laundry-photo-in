@@ -1,10 +1,13 @@
 import {
   Column,
-  CreateDateColumn, DeleteDateColumn,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Country } from './country.entity';
 
 @Entity()
 export class Gallery {
@@ -16,6 +19,9 @@ export class Gallery {
 
   @Column()
   description: string;
+
+  @ManyToOne(() => Country, (country) => country.galleries, { nullable: true })
+  country: Country;
 
   @CreateDateColumn()
   created!: Date;
