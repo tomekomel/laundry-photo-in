@@ -15,15 +15,18 @@ export class GalleryService {
   ) {}
 
   async findAll(): Promise<GalleryDto[]> {
-    return (await this.galleryRepository.find({ relations: ['country'] })).map(
-      (gallery) => ({
-        id: gallery.id,
-        title: gallery.title,
-        description: gallery.description,
-        country: gallery.country ? gallery.country.name : '',
-        created: gallery.created.toLocaleString('pl-PL'),
-      }),
-    );
+    return (
+      await this.galleryRepository.find({
+        relations: ['country'],
+        order: { created: 'DESC' },
+      })
+    ).map((gallery) => ({
+      id: gallery.id,
+      title: gallery.title,
+      description: gallery.description,
+      country: gallery.country ? gallery.country.name : '',
+      created: gallery.created.toLocaleString('pl-PL'),
+    }));
   }
 
   findOne(id: number): Promise<Gallery> {

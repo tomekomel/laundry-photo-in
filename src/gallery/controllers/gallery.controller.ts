@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Post, Render, Req } from '@nestjs/common';
+import { Controller, Get, Param, Post, Render, Req, Res } from '@nestjs/common';
 import { GalleryService } from '../services/gallery.service';
 import { CountryService } from '../services/country.service';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('galleries')
 export class GalleryController {
@@ -11,8 +11,9 @@ export class GalleryController {
   ) {}
 
   @Post()
-  saveGallery(@Req() request: Request) {
+  saveGallery(@Req() request: Request, @Res() response: Response) {
     this.galleryService.save(request.body);
+    response.redirect('galleries');
   }
 
   @Get('create')
