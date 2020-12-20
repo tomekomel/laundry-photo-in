@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Gallery } from '../entities/gallery.entity';
 import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 import { GalleryDto } from '../dtos/gallery.dto';
+import { Country } from '../entities/country.entity';
 
 @Injectable()
 export class GalleryService {
@@ -14,13 +15,15 @@ export class GalleryService {
   ) {}
 
   async findAll(): Promise<GalleryDto[]> {
-    return (await this.galleryRepository.find()).map((gallery) => ({
-      id: gallery.id,
-      title: gallery.title,
-      description: gallery.description,
-      countryId: gallery.country ? gallery.country.id : null,
-      created: gallery.created.toLocaleString('pl-PL'),
-    }));
+    return (await this.galleryRepository.find({ relations: ['country'] })).map(
+      (gallery) => ({
+        id: gallery.id,
+        title: gallery.title,
+        description: gallery.description,
+        country: gallery.country ? gallery.country.name : '',
+        created: gallery.created.toLocaleString('pl-PL'),
+      }),
+    );
   }
 
   findOne(id: number): Promise<Gallery> {
@@ -32,7 +35,14 @@ export class GalleryService {
   }
 
   async save(createGalleryDto: CreateGalleryDto) {
-    console.log(createGalleryDto);
-    await this.galleryRepository.save(createGalleryDto);
+    const gallery = new Gallery();
+    const country = new Country();
+
+    gallery.title = createGalleryDto.title;
+    country.id = createGalleryDto.country;
+    gallery.country = country;
+    gallery.description = createGalleryDto.description;
+
+    await this.galleryRepository.save(gallery);
   }
 }

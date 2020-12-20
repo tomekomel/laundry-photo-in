@@ -7,7 +7,7 @@ export class CreateGalleryDto {
 
   @IsNotEmpty()
   @IsNumber()
-  countryId: number;
+  country: number;
 
   @IsNotEmpty()
   @IsString()

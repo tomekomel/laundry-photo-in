@@ -8,9 +8,8 @@ export class GalleryDto {
   @IsString()
   title: string;
 
-  @IsNumber()
-  @IsOptional()
-  countryId: number | null;
+  @IsString()
+  country: string;
 
   @IsNotEmpty()
   @IsString()
