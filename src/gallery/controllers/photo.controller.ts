@@ -13,14 +13,14 @@ export class PhotoController {
 
   @Post()
   @UseInterceptors(FilesInterceptor('photos', 10))
-  async uploadPhotos(@UploadedFiles() files) {
+  async uploadPhotos(@UploadedFiles() photos) {
     const response = [];
-    files.forEach((file) => {
-      const filesResponse = {
-        originalName: file.originalname,
-        fileName: file.filename,
+    photos.forEach((photo) => {
+      const photoResponse = {
+        originalName: photo.originalname,
+        fileName: photo.filename,
       };
-      response.push(filesResponse);
+      response.push(photoResponse);
     });
     return {
       status: HttpStatus.OK,
