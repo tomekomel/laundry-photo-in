@@ -1,8 +1,11 @@
-import { Controller, Get, Param, Post, Render, Req, Res } from '@nestjs/common';
+import { Controller, Get, Param, Post, Render, Req, Res, UseFilters, UseGuards } from '@nestjs/common';
 import { GalleryService } from '../services/gallery.service';
 import { CountryService } from '../services/country.service';
 import { Request, Response } from 'express';
+import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
+import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 
+@UseFilters(AuthExceptionFilter)
 @Controller('galleries')
 export class GalleryController {
   constructor(
@@ -10,12 +13,14 @@ export class GalleryController {
     private readonly countryService: CountryService,
   ) {}
 
+  @UseGuards(AuthenticatedGuard)
   @Post()
   saveGallery(@Req() request: Request, @Res() response: Response) {
     this.galleryService.save(request.body);
     response.redirect('galleries');
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('create')
   @Render('create-gallery')
   async createGallery() {
