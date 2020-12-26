@@ -13,10 +13,16 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
+import { GalleryService } from '../services/gallery.service';
+import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
 
 @Controller('photos')
 export class PhotoController {
   readonly uploadFolder = './upload';
+
+  constructor(
+    private readonly galleryService: GalleryService,
+  ) {}
 
   @Post()
   @UseInterceptors(FilesInterceptor('photos', 10))
@@ -40,7 +46,13 @@ export class PhotoController {
   @Get('add')
   @Render('add-photos')
   async addPhotos(@Query('galleryId') galleryId: number) {
-    return { galleryId };
+    const gallery = await this.galleryService.findOne(galleryId);
+
+    if (!galleryId || !gallery) {
+      throw new GalleryNotFoundException();
+    }
+
+    return { galleryId, galleryName: gallery.title };
   }
 
   @Get(':photoName')
