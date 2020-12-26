@@ -1,11 +1,18 @@
 import {
-  Controller, Get,
-  HttpStatus, Param,
-  Post, Res,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Render,
+  Res,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 
 @Controller('photos')
 export class PhotoController {
@@ -27,6 +34,13 @@ export class PhotoController {
       message: 'Photos uploaded successfully!',
       data: response,
     };
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('add')
+  @Render('add-photos')
+  async addPhotos(@Query('galleryId') galleryId: number) {
+    return { galleryId };
   }
 
   @Get(':photoName')
