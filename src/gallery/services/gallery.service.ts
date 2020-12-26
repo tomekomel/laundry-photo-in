@@ -37,7 +37,7 @@ export class GalleryService {
     await this.galleryRepository.delete(id);
   }
 
-  async save(createGalleryDto: CreateGalleryDto) {
+  async save(createGalleryDto: CreateGalleryDto): Promise<Gallery> {
     const gallery = new Gallery();
     const country = new Country();
 
@@ -46,6 +46,6 @@ export class GalleryService {
     gallery.country = country;
     gallery.description = createGalleryDto.description;
 
-    await this.galleryRepository.save(gallery);
+    return await this.galleryRepository.save(gallery);
   }
 }

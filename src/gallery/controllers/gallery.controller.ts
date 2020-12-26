@@ -15,9 +15,9 @@ export class GalleryController {
 
   @UseGuards(AuthenticatedGuard)
   @Post()
-  saveGallery(@Req() request: Request, @Res() response: Response) {
-    this.galleryService.save(request.body);
-    response.redirect('galleries');
+  async saveGallery(@Req() request: Request, @Res() response: Response) {
+    const gallery = await this.galleryService.save(request.body);
+    response.redirect(`/photos/add?galleryId=${gallery.id}`);
   }
 
   @UseGuards(AuthenticatedGuard)
