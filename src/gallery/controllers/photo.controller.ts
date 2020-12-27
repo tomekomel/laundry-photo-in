@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpStatus,
@@ -19,7 +20,7 @@ import { GalleryService } from '../services/gallery.service';
 import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
 import { photoFileName } from '../../common/utils/file.utils';
 import { PhotoService } from '../services/photo.service';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 const uploadFolder = './uploads';
 
@@ -41,8 +42,8 @@ export class PhotoController {
   )
   async uploadPhotos(
     @UploadedFiles() photos: Express.Multer.File[],
-    @Param('galleryId') galleryId: number,
-    @Res() response: Response
+    @Body('galleryId') galleryId: number,
+    @Res() response: Response,
   ) {
     await this.photoService.saveUploadedPhotos(photos, galleryId);
     response.redirect('/galleries');
