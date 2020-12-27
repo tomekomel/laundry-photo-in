@@ -18,7 +18,7 @@ import { GalleryNotFoundException } from '../exceptions/gallery-not-found.except
 import { diskStorage } from 'multer';
 import { photoFileName } from '../../common/utils/file.utils';
 
-const uploadFolder = './upload';
+const uploadFolder = './uploads';
 
 @Controller('photos')
 export class PhotoController {
@@ -33,7 +33,7 @@ export class PhotoController {
       filename: photoFileName,
     })
   }))
-  async uploadPhotos(@UploadedFiles() photos) {
+  async uploadPhotos(@UploadedFiles() photos: Express.Multer.File[]) {
     const response = [];
     photos.forEach((photo) => {
       const photoResponse = {
