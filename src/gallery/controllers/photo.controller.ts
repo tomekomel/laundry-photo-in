@@ -12,11 +12,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { GalleryService } from '../services/gallery.service';
 import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
-import { diskStorage } from 'multer';
 import { photoFileName } from '../../common/utils/file.utils';
+import { PhotoService } from '../services/photo.service';
+import { Request, Response } from 'express';
 
 const uploadFolder = './uploads';
 
@@ -24,29 +27,25 @@ const uploadFolder = './uploads';
 export class PhotoController {
   constructor(
     private readonly galleryService: GalleryService,
+    private readonly photoService: PhotoService,
   ) {}
 
   @Post()
-  @UseInterceptors(FilesInterceptor('photos', 10, {
-    storage: diskStorage({
-      destination: uploadFolder,
-      filename: photoFileName,
-    })
-  }))
-  async uploadPhotos(@UploadedFiles() photos: Express.Multer.File[]) {
-    const response = [];
-    photos.forEach((photo) => {
-      const photoResponse = {
-        originalName: photo.originalname,
-        fileName: photo.filename,
-      };
-      response.push(photoResponse);
-    });
-    return {
-      status: HttpStatus.OK,
-      message: 'Photos uploaded successfully!',
-      data: response,
-    };
+  @UseInterceptors(
+    FilesInterceptor('photos', 10, {
+      storage: diskStorage({
+        destination: uploadFolder,
+        filename: photoFileName,
+      }),
+    }),
+  )
+  async uploadPhotos(
+    @UploadedFiles() photos: Express.Multer.File[],
+    @Param('galleryId') galleryId: number,
+    @Res() response: Response
+  ) {
+    await this.photoService.saveUploadedPhotos(photos, galleryId);
+    response.redirect('/galleries');
   }
 
   @UseGuards(AuthenticatedGuard)

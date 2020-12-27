@@ -8,6 +8,7 @@ import { CountryService } from './services/country.service';
 import { PhotoController } from './controllers/photo.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { Photo } from './entities/photo.entity';
+import { PhotoService } from './services/photo.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { Photo } from './entities/photo.entity';
     }),
   ],
   controllers: [GalleryController, PhotoController],
-  providers: [GalleryService, CountryService],
+  providers: [GalleryService, CountryService, PhotoService],
 })
 export class GalleryModule {}
