@@ -39,7 +39,8 @@
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "spectre.css": "^0.5.9",
-    "typeorm": "^0.2.29"
+    "typeorm": "^0.2.29",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/testing": "^7.5.5",

@@ -15,17 +15,24 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { GalleryService } from '../services/gallery.service';
 import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
+import { diskStorage } from 'multer';
+import { photoFileName } from '../../common/utils/file.utils';
+
+const uploadFolder = './upload';
 
 @Controller('photos')
 export class PhotoController {
-  readonly uploadFolder = './upload';
-
   constructor(
     private readonly galleryService: GalleryService,
   ) {}
 
   @Post()
-  @UseInterceptors(FilesInterceptor('photos', 10))
+  @UseInterceptors(FilesInterceptor('photos', 10, {
+    storage: diskStorage({
+      destination: uploadFolder,
+      filename: photoFileName,
+    })
+  }))
   async uploadPhotos(@UploadedFiles() photos) {
     const response = [];
     photos.forEach((photo) => {
@@ -57,7 +64,7 @@ export class PhotoController {
 
   @Get(':photoName')
   getPhoto(@Param('photoName') photo, @Res() res) {
-    const response = res.sendFile(photo, { root: this.uploadFolder });
+    const response = res.sendFile(photo, { root: uploadFolder });
     return {
       status: HttpStatus.OK,
       data: response,
