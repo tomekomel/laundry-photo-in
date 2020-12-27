@@ -4,15 +4,13 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Country } from './country.entity';
-import { Photo } from './photo.entity';
+import { Gallery } from './gallery.entity';
 
 @Entity()
-export class Gallery {
+export class Photo {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,11 +20,14 @@ export class Gallery {
   @Column()
   description: string;
 
-  @ManyToOne(() => Country, (country) => country.galleries, { nullable: true })
-  country: Country;
+  @Column()
+  fileName: string;
 
-  @OneToMany(() => Photo, (photo) => photo.gallery)
-  photos: Photo[];
+  @Column()
+  alt: string;
+
+  @ManyToOne(() => Gallery, (gallery) => gallery.photos)
+  gallery: Gallery;
 
   @CreateDateColumn()
   created!: Date;

@@ -7,10 +7,11 @@ import { Country } from './entities/country.entity';
 import { CountryService } from './services/country.service';
 import { PhotoController } from './controllers/photo.controller';
 import { MulterModule } from '@nestjs/platform-express';
+import { Photo } from './entities/photo.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Gallery, Country]),
+    TypeOrmModule.forFeature([Gallery, Country, Photo]),
     MulterModule.register({
       dest: './uploads',
     }),
