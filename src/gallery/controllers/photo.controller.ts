@@ -14,13 +14,16 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { Response } from 'express';
+import { writeFile, readFile } from 'fs';
+import * as sharp from 'sharp';
+import { promisify } from 'util';
 
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { GalleryService } from '../services/gallery.service';
 import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
 import { photoFileName } from '../../common/utils/file.utils';
 import { PhotoService } from '../services/photo.service';
-import { Response } from 'express';
 
 const uploadFolder = './public/uploads';
 
