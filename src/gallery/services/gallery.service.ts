@@ -6,6 +6,7 @@ import { Gallery } from '../entities/gallery.entity';
 import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 import { GalleryDto } from '../dtos/gallery.dto';
 import { Country } from '../entities/country.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Injectable()
 export class GalleryService {
@@ -41,9 +42,12 @@ export class GalleryService {
   async save(createGalleryDto: CreateGalleryDto): Promise<Gallery> {
     const gallery = new Gallery();
     const country = new Country();
+    const user = new User();
 
     gallery.title = createGalleryDto.title;
     country.id = createGalleryDto.country;
+    user.id = createGalleryDto.userId;
+    gallery.user = user;
     gallery.country = country;
     gallery.description = createGalleryDto.description;
 

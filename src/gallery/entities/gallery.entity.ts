@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Country } from './country.entity';
 import { Photo } from './photo.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class Gallery {
@@ -27,6 +28,9 @@ export class Gallery {
 
   @OneToMany(() => Photo, (photo) => photo.gallery)
   photos: Photo[];
+
+  @ManyToOne(() => User)
+  user: User;
 
   @CreateDateColumn()
   created!: Date;

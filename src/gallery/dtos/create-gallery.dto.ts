@@ -10,6 +10,10 @@ export class CreateGalleryDto {
   country: number;
 
   @IsNotEmpty()
+  @IsNumber()
+  userId: number;
+
+  @IsNotEmpty()
   @IsString()
   description: string;
 }

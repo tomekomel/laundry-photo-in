@@ -33,8 +33,11 @@ export class GalleryController {
   @UseGuards(AuthenticatedGuard)
   @Get('create')
   @Render('create-gallery')
-  async createGallery() {
-    return { countries: await this.countryService.findAll() };
+  async createGallery(@Req() request) {
+    return {
+      countries: await this.countryService.findAll(),
+      userId: request.user.id,
+    };
   }
 
   @Get()
