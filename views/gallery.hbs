@@ -1,4 +1,19 @@
 <h1>{{ gallery.title }}</h1>
+
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="/galleries">Galleries</a>
+    </li>
+    <li class="breadcrumb-item">
+        {{ gallery.title }}
+    </li>
+</ul>
+
+<div class="gallery">
 {{#each gallery.photos}}
     <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
 {{/each}}
+</div>

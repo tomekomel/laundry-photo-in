@@ -7,7 +7,13 @@
             {{#if userId}}
                 <h3>You are logged in.</h3>
             {{else}}
-                <span class="mdl-textfield__error">{{ message }}</span>
+                {{#if message}}
+                    <div class="toast toast-primary">
+                        <button class="btn btn-clear float-right"></button>
+                        <p>{{ message }}</p>
+                    </div>
+                {{/if}}
+                <br />
                 <form action="login" method="post">
                     <div class="form-group">
                         <label class="form-label" for="username">Login</label>
