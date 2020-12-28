@@ -15,15 +15,13 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { Response } from 'express';
-import { writeFile, readFile } from 'fs';
-import * as sharp from 'sharp';
-import { promisify } from 'util';
 
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { GalleryService } from '../services/gallery.service';
 import { GalleryNotFoundException } from '../exceptions/gallery-not-found.exception';
 import { photoFileName } from '../../common/utils/file.utils';
 import { PhotoService } from '../services/photo.service';
+import { ThumbnailGenerator } from '../services/thumbnail.generator';
 
 const uploadFolder = './public/uploads';
 
@@ -32,6 +30,7 @@ export class PhotoController {
   constructor(
     private readonly galleryService: GalleryService,
     private readonly photoService: PhotoService,
+    private readonly thumbnailGenerator: ThumbnailGenerator
   ) {}
 
   @Post()
@@ -48,6 +47,7 @@ export class PhotoController {
     @Body('galleryId') galleryId: number,
     @Res() response: Response,
   ) {
+    this.thumbnailGenerator.generateThumbnails(photos);
     await this.photoService.saveUploadedPhotos(photos, galleryId);
     response.redirect('/galleries');
   }
