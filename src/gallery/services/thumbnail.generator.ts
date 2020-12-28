@@ -1,7 +1,7 @@
 import { readFile } from 'fs';
 import * as sharp from 'sharp';
 import { promisify } from 'util';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 const readFileAsync = promisify(readFile);
 
@@ -23,10 +23,11 @@ export class ThumbnailGenerator {
       .then((buffer) => {
         return sharp(buffer)
           .resize(+singleSize)
+          .jpeg({ quality: 95 })
           .toFile(`${this.folderPath}/${size}/${photo.filename}`);
       })
-      .then(console.log)
-      .catch(console.error);
+      .then((result) => Logger.log(result))
+      .catch((error) => Logger.error(error));
   }
 
   private checkExtensionAvailability(photo: Express.Multer.File): boolean {
