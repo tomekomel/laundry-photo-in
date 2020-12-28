@@ -14,6 +14,9 @@ export class GalleryDto {
   @IsString()
   photo: string;
 
+  @IsString()
+  userName: string;
+
   @IsNotEmpty()
   @IsString()
   description: string;

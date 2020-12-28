@@ -12,8 +12,11 @@
     </li>
 </ul>
 
+<div class="toolbar">
+    <small class="label">Country: {{ gallery.country.name }} | User: {{ gallery.user.name }}</small>
+</div>
 <div class="gallery">
-{{#each gallery.photos}}
-    <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
-{{/each}}
+    {{#each gallery.photos}}
+        <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
+    {{/each}}
 </div>

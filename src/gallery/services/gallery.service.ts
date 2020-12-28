@@ -18,7 +18,7 @@ export class GalleryService {
   async findAll(): Promise<GalleryDto[]> {
     return (
       await this.galleryRepository.find({
-        relations: ['country', 'photos'],
+        relations: ['country', 'photos', 'user'],
         order: { created: 'DESC' },
       })
     ).map((gallery) => ({
@@ -27,12 +27,15 @@ export class GalleryService {
       description: gallery.description,
       country: gallery.country ? gallery.country.name : '',
       photo: gallery.photos.length ? gallery.photos[0].fileName : '',
+      userName: gallery.user.name,
       created: gallery.created.toLocaleString('pl-PL'),
     }));
   }
 
   findOne(id: number): Promise<Gallery> {
-    return this.galleryRepository.findOne(id, { relations: ['photos'] });
+    return this.galleryRepository.findOne(id, {
+      relations: ['photos', 'user', 'country'],
+    });
   }
 
   async delete(id: string): Promise<void> {
