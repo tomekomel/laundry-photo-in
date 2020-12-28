@@ -29,10 +29,10 @@ export class PhotoService {
       return photo;
     });
 
-    const savePhotosPromises = photos.map((photo) =>
+    const savePhotoPromises = photos.map((photo) =>
       this.photoRepository.save(photo),
     );
 
-    await Promise.all(savePhotosPromises);
+    await Promise.all(savePhotoPromises);
   }
 }
