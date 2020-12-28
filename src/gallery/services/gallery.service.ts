@@ -7,6 +7,7 @@ import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 import { GalleryDto } from '../dtos/gallery.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
+import { equals } from 'class-validator';
 
 @Injectable()
 export class GalleryService {
@@ -15,10 +16,11 @@ export class GalleryService {
     private readonly galleryRepository: Repository<Gallery>,
   ) {}
 
-  async findAll(): Promise<GalleryDto[]> {
+  async findAll(countryId: number): Promise<GalleryDto[]> {
     return (
       await this.galleryRepository.find({
         relations: ['country', 'photos', 'user'],
+        where: countryId ? { country: { id: countryId } } : {},
         order: { created: 'DESC' },
       })
     ).map((gallery) => ({

@@ -3,6 +3,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Render,
   Req,
   Res,
@@ -42,8 +43,8 @@ export class GalleryController {
 
   @Get()
   @Render('galleries')
-  async getGalleries() {
-    return { galleries: await this.galleryService.findAll() };
+  async getGalleries(@Query('countryId') countryId: number) {
+    return { galleries: await this.galleryService.findAll(countryId) };
   }
 
   @Get('/:id')
