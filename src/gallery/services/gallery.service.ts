@@ -17,7 +17,7 @@ export class GalleryService {
   async findAll(): Promise<GalleryDto[]> {
     return (
       await this.galleryRepository.find({
-        relations: ['country'],
+        relations: ['country', 'photos'],
         order: { created: 'DESC' },
       })
     ).map((gallery) => ({
@@ -25,6 +25,7 @@ export class GalleryService {
       title: gallery.title,
       description: gallery.description,
       country: gallery.country ? gallery.country.name : '',
+      photo: gallery.photos.length ? gallery.photos[0].fileName : '',
       created: gallery.created.toLocaleString('pl-PL'),
     }));
   }

@@ -1,8 +1,13 @@
 <h1>Gallery</h1>
+
 {{#each galleries}}
-    <li>
+    <div class="gallery">
         <a href="galleries/{{this.id}}">
-            {{this.title}} ({{this.id}}) - {{this.created}}, {{this.country}}
+            <h2>{{this.title}}</h2>
         </a>
-    </li>
+        {{#if this.photo}}
+            <img src="../uploads/1200x1200/{{ this.photo }}" alt="{{ this.title }}" width="1200" />
+        {{/if}}
+        <small class="label">Country: {{this.country}}</small>
+    </div>
 {{/each}}

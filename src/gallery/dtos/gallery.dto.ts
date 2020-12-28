@@ -11,6 +11,9 @@ export class GalleryDto {
   @IsString()
   country: string;
 
+  @IsString()
+  photo: string;
+
   @IsNotEmpty()
   @IsString()
   description: string;

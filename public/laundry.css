@@ -13,3 +13,4 @@ body, h1, h2, p { font-family: 'JetBrains Mono', monospace; }
 .login h1 { margin-bottom: 40px }
 
 .add-photos { padding-bottom: 30px }
+.gallery { padding: 20px 0 60px }
