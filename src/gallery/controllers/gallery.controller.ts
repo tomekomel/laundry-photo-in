@@ -44,7 +44,8 @@ export class GalleryController {
   }
 
   @Get('/:id')
-  getGallery(@Param() id: number) {
-    return this.galleryService.findOne(id);
+  @Render('gallery')
+  async getGallery(@Param() id: number) {
+    return { gallery: await this.galleryService.findOne(id) };
   }
 }

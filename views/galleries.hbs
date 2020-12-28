@@ -1,4 +1,8 @@
 <h1>Gallery</h1>
 {{#each galleries}}
-    <li>{{this.title}} ({{this.id}}) - {{this.created}}, {{this.country}}</li>
+    <li>
+        <a href="galleries/{{this.id}}">
+            {{this.title}} ({{this.id}}) - {{this.created}}, {{this.country}}
+        </a>
+    </li>
 {{/each}}

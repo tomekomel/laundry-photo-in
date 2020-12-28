@@ -22,7 +22,7 @@ import { photoFileName } from '../../common/utils/file.utils';
 import { PhotoService } from '../services/photo.service';
 import { Response } from 'express';
 
-const uploadFolder = './uploads';
+const uploadFolder = './public/uploads';
 
 @Controller('photos')
 export class PhotoController {
