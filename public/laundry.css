@@ -15,3 +15,4 @@ body, h1, h2, p { font-family: 'JetBrains Mono', monospace; }
 .add-photos { padding-bottom: 30px }
 .gallery { padding: 20px 0 60px }
 .toolbar { padding: 30px 0 20px }
+.buttons { padding: 20px 0 20px }

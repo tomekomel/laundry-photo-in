@@ -11,4 +11,11 @@ export class UserController {
   getProfile(@Request() req) {
     return { user: req.user }
   }
+
+  @Get('/:userId/edit')
+  @UseGuards(AuthenticatedGuard)
+  @Render('edit-profile')
+  editProfile(@Request() req) {
+    return { user: req.user }
+  }
 }
