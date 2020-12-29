@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
+import { EditUserDto } from '../dtos/edit-user.dto';
+import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
 
 @Injectable()
 export class UserService {
@@ -15,7 +17,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  findOne(id: string): Promise<User> {
+  findOne(id: number): Promise<User> {
     return this.userRepository.findOne(id);
   }
 
@@ -28,6 +30,24 @@ export class UserService {
     user.name = userDto.name;
     user.email = userDto.email;
     user.password = userDto.password;
+    await this.userRepository.save(user);
+  }
+
+  async save(editUserDto: EditUserDto) {
+    const user = await this.findOne((editUserDto.userId as unknown) as number);
+
+    if (
+      editUserDto.newPassword !== '' &&
+      !(await user.comparePassword(editUserDto.password))
+    ) {
+      throw new PasswordMismatchException(user.id);
+    }
+
+    user.name = editUserDto.name !== '' ? editUserDto.name : user.name;
+    user.email = editUserDto.email !== '' ? editUserDto.email : user.email;
+    user.password =
+      editUserDto.newPassword !== '' ? editUserDto.newPassword : user.password;
+
     await this.userRepository.save(user);
   }
 }
