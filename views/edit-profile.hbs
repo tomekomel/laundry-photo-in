@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="columns">
+        <div class="column col-3">
+            <h1>Edit Profile</h1>
+            <br />
+
+            {{#if message}}
+                <div class="toast toast-primary">
+                    <button class="btn btn-clear float-right"></button>
+                    <p>{{ message }}</p>
+                </div>
+            {{/if}}
+            <br />
+            <form action="" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="username">Login</label>
+                    <input class="form-input" id="username" name="username" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-input" id="password" name="password" type="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="new-password">New Password</label>
+                    <input class="form-input" id="new-password" name="new-password" type="password" placeholder="New Password">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <a class="btn" href="/">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
