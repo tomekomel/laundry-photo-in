@@ -1,10 +1,13 @@
 import {
+  BeforeInsert,
   Column,
-  CreateDateColumn, DeleteDateColumn,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -28,4 +31,16 @@ export class User {
 
   @DeleteDateColumn()
   deleted: Date;
+
+  @BeforeInsert()
+  async generatePasswordHash(): Promise<void> {
+    this.password = await bcrypt.hashSync(
+      this.password,
+      bcrypt.genSaltSync(10),
+    );
+  }
+
+  async comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compareSync(password, this.password);
+  }
 }

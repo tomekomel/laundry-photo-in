@@ -7,7 +7,6 @@ import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 import { GalleryDto } from '../dtos/gallery.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
-import { equals } from 'class-validator';
 
 @Injectable()
 export class GalleryService {

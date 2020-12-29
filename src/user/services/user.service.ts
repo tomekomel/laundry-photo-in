@@ -23,7 +23,11 @@ export class UserService {
     return this.userRepository.findOne({ name });
   }
 
-  async create(user: CreateUserDto) {
+  async create(userDto: CreateUserDto) {
+    const user = new User();
+    user.name = userDto.name;
+    user.email = userDto.email;
+    user.password = userDto.password;
     await this.userRepository.save(user);
   }
 }

@@ -1,18 +1,6 @@
 version: "3"
 
 services:
-  backend_service:
-    depends_on:
-      - db
-    restart: always
-    build: .
-    ports:
-    - "${APP_PORT}:${APP_PORT}"
-    volumes:
-    - .:/data/app
-    - /data/app/node_modules
-    env_file: .env
-
   db:
     image: mysql:5.7
     container_name: ${DB_HOST}
@@ -25,6 +13,18 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
+
+  backend_service:
+    depends_on:
+      - db
+    restart: always
+    build: .
+    ports:
+    - "${APP_PORT}:${APP_PORT}"
+    volumes:
+    - .:/data/app
+    - /data/app/node_modules
+    env_file: .env
 
   admin:
     image: phpmyadmin/phpmyadmin:latest
