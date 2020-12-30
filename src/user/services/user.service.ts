@@ -36,17 +36,16 @@ export class UserService {
   async save(editUserDto: EditUserDto) {
     const user = await this.findOne((editUserDto.userId as unknown) as number);
 
-    if (
-      editUserDto.newPassword !== '' &&
-      !(await user.comparePassword(editUserDto.password))
-    ) {
-      throw new PasswordMismatchException(user.id);
+    if (editUserDto.newPassword !== '') {
+      if (!(await user.comparePassword(editUserDto.password))) {
+        throw new PasswordMismatchException(user.id);
+      }
+      user.password = editUserDto.newPassword;
+      await user.generatePasswordHash();
     }
 
     user.name = editUserDto.name !== '' ? editUserDto.name : user.name;
     user.email = editUserDto.email !== '' ? editUserDto.email : user.email;
-    user.password =
-      editUserDto.newPassword !== '' ? editUserDto.newPassword : user.password;
 
     await this.userRepository.save(user);
   }

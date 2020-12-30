@@ -36,7 +36,8 @@ export class UserController {
   @Get('/:userId')
   @UseGuards(AuthenticatedGuard)
   @Render('edit-profile')
-  editUser(@Request() req) {
-    return { user: req.user };
+  async editUser(@Request() req) {
+    const user = await this.userService.findOne(req.user.id);
+    return { user };
   }
 }
