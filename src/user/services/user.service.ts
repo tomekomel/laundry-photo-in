@@ -6,6 +6,8 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { EditUserDto } from '../dtos/edit-user.dto';
 import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { UserNameAlreadyExistsException } from '../exceptions/user-name-already-exists.exception';
 
 @Injectable()
 export class UserService {
@@ -26,15 +28,29 @@ export class UserService {
   }
 
   async create(userDto: CreateUserDto) {
+    const { name, email, password } = userDto;
+
+    const existingUser = await this.findOneByName(name);
+
+    if (existingUser) {
+      throw new UserNameAlreadyExistsException(name);
+    }
+
     const user = new User();
-    user.name = userDto.name;
-    user.email = userDto.email;
-    user.password = userDto.password;
+    user.name = name;
+    user.email = email;
+    user.password = password;
     await this.userRepository.save(user);
   }
 
   async save(editUserDto: EditUserDto) {
     const user = await this.findOne((editUserDto.userId as unknown) as number);
+
+    if (!user) {
+      throw new UserNotFoundException(
+        (editUserDto.userId as unknown) as number,
+      );
+    }
 
     if (editUserDto.newPassword !== '') {
       if (!(await user.comparePassword(editUserDto.password))) {
