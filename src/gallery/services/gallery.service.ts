@@ -15,11 +15,20 @@ export class GalleryService {
     private readonly galleryRepository: Repository<Gallery>,
   ) {}
 
-  async findAll(countryId: number): Promise<GalleryDto[]> {
+  async findAll(countryId = 0, userId = 0): Promise<GalleryDto[]> {
+    let whereConditions = {};
+
+    if (countryId) {
+      whereConditions = { country: { id: countryId } };
+    }
+    if (userId) {
+      whereConditions = { ...whereConditions, user: { id: userId } };
+    }
+
     return (
       await this.galleryRepository.find({
         relations: ['country', 'photos', 'user'],
-        where: countryId ? { country: { id: countryId } } : {},
+        where: whereConditions,
         order: { created: 'DESC' },
       })
     ).map((gallery) => ({

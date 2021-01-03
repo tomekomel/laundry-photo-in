@@ -47,6 +47,13 @@ export class GalleryController {
     return { galleries: await this.galleryService.findAll(countryId) };
   }
 
+  @Get('my')
+  @UseGuards(AuthenticatedGuard)
+  @Render('my-galleries')
+  async myGalleries(@Req() request) {
+    return { galleries: await this.galleryService.findAll(0, request.user.id) };
+  }
+
   @Get('/:id')
   @Render('gallery')
   async getGallery(@Param() id: number) {

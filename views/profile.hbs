@@ -4,8 +4,16 @@
     <img src="https://cataas.com/cat" class="avatar-icon">
     <figcaption>Hello {{ user.name }}!</figcaption>
 </figure>
-<br /><br /><br />
-<div class="mdl-card__actions mdl-card--border">
-    <a class="button btn-primary" href='/auth/logout'>Log Out</a> |
-    <a class="button btn-primary" href='/users/{{ user.id }}'>Edit Profile</a>
-</div>
+<br /><br />
+
+<ul class="nav">
+    <li class="nav-item">
+        <a href="/galleries/my">My galleries</a>
+    </li>
+    <li class="nav-item">
+        <a href='/users/{{ user.id }}'>Edit Profile</a>
+    </li>
+    <li class="nav-item">
+        <a href='/auth/logout'>Log Out</a>
+    </li>
+</ul>

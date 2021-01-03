@@ -1,0 +1,28 @@
+<h1>My galleries</h1>
+
+<div class="columns my-galleries">
+{{#each galleries}}
+    <div class="column col-4 col-xs-12">
+        <div class="card">
+            {{#if this.photo}}
+                <div class="card-image">
+                    <a href="galleries/{{this.id}}">
+                        <img src="../uploads/300x300/{{ this.photo }}" alt="{{ this.title }}" />
+                    </a>
+                </div>
+            {{/if}}
+            <div class="card-header">
+                <button class="btn btn-primary float-right">
+                    <i class="icon icon-edit"></i>
+                </button>
+                <button class="btn btn-primary float-right">
+                    <i class="icon icon-delete"></i>
+                </button>
+                <div class="card-title h5">{{ this.title }}</div>
+                <div class="card-subtitle text-gray">Country: {{ this.country }}</div>
+            </div>
+            <div class="card-body">{{ this.description }}</div>
+        </div>
+    </div>
+{{/each}}
+</div>
