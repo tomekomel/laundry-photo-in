@@ -9,13 +9,22 @@ import * as exphbs from 'express-handlebars';
 import * as session from 'express-session';
 import flash = require('connect-flash');
 import * as passport from 'passport';
+import * as hbsHelpers from 'handlebars-helpers';
+const multihelpers = hbsHelpers();
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const config = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 
-  app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
+  app.engine(
+    '.hbs',
+    exphbs({
+      extname: '.hbs',
+      defaultLayout: 'main',
+      helpers: { ...multihelpers },
+    }),
+  );
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.set('views', join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');

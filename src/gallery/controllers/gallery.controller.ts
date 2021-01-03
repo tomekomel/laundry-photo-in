@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Query,
   Render,
@@ -58,5 +59,15 @@ export class GalleryController {
   @Render('gallery')
   async getGallery(@Param() id: number) {
     return { gallery: await this.galleryService.findOne(id) };
+  }
+
+  @Get('/:id/edit')
+  @UseGuards(AuthenticatedGuard)
+  @Render('edit-gallery')
+  async editGallery(@Param('id', ParseIntPipe) id: number) {
+    return {
+      gallery: await this.galleryService.findOne(id),
+      countries: await this.countryService.findAll(),
+    };
   }
 }

@@ -1,0 +1,44 @@
+<h1>Edit gallery "{{ gallery.title }}"</h1>
+<br />
+<br />
+<form action="../galleries/{{ gallery.id }}" method="post">
+    <div class="container">
+        <div class="columns">
+            <div class="column col-6">
+                <span class="mdl-textfield__error">{{ message }}</span>
+
+                    <div class="form-group">
+                        <label class="form-label" for="title">Title</label>
+                        <input class="form-input" id="title" name="title" type="text"
+                               required="required" value="{{ gallery.title }}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="country">Country</label>
+                        <select name="country" class="form-select" required="required">
+                            <option value="">- select country -</option>
+                            {{#each countries}}
+                                <option value="{{ this.id }}" {{#if (eq this.id ../gallery.country.id)}} selected {{/if}}>
+                                    {{ this.name }}
+                                </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="description">Gallery description</label>
+                        <textarea class="form-input" id="description" name="description" rows="5">{{ gallery.description }}</textarea>
+                    </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column col-6">
+                    <div class="form-group">
+                        <input type="hidden" name="userId" value="{{ userId }}" />
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a class="btn" href="/">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</form>
