@@ -9,11 +9,11 @@
             <form action="../galleries" method="post">
                 <div class="form-group">
                     <label class="form-label" for="title">Title</label>
-                    <input class="form-input" id="title" name="title" type="text">
+                    <input class="form-input" id="title" name="title" type="text" required="required" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="countryId">Country</label>
-                    <select name="country">
+                    <label class="form-label" for="country">Country</label>
+                    <select name="country" class="form-select" required="required">
                         <option value="">- select country -</option>
                         {{#each countries}}
                             <option value="{{ this.id }}">{{ this.name }}</option>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="description">Gallery description</label>
-                    <textarea class="form-input" id="description" name="description"></textarea>
+                    <textarea class="form-input" id="description" name="description" rows="5"></textarea>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="userId" value="{{ userId }}" />
