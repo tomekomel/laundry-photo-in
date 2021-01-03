@@ -7,7 +7,7 @@ const readFileAsync = promisify(readFile);
 
 @Injectable()
 export class ThumbnailGenerator {
-  readonly sizes = ['100x100', '300x300', '1200x1200'];
+  readonly sizes = ['100x100', '300x300', '600x600', '1200x1200'];
   readonly availableExtensions = ['jpg', 'jpeg', 'png'];
   readonly folderPath = `./public/uploads`;
 
