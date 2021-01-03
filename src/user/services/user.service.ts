@@ -4,10 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { EditUserDto } from '../dtos/edit-user.dto';
 import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 import { UserNameAlreadyExistsException } from '../exceptions/user-name-already-exists.exception';
+import { SaveUserDto } from '../dtos/save-user.dto';
 
 @Injectable()
 export class UserService {
@@ -43,25 +43,23 @@ export class UserService {
     await this.userRepository.save(user);
   }
 
-  async save(editUserDto: EditUserDto) {
-    const user = await this.findOne((editUserDto.userId as unknown) as number);
+  async save(saveUserDto: SaveUserDto) {
+    const user = await this.findOne(saveUserDto.userId);
 
     if (!user) {
-      throw new UserNotFoundException(
-        (editUserDto.userId as unknown) as number,
-      );
+      throw new UserNotFoundException(saveUserDto.userId);
     }
 
-    if (editUserDto.newPassword !== '') {
-      if (!(await user.comparePassword(editUserDto.password))) {
+    if (saveUserDto.newPassword) {
+      if (!(await user.comparePassword(saveUserDto.password))) {
         throw new PasswordMismatchException(user.id);
       }
-      user.password = editUserDto.newPassword;
+      user.password = saveUserDto.newPassword;
       await user.generatePasswordHash();
     }
 
-    user.name = editUserDto.name !== '' ? editUserDto.name : user.name;
-    user.email = editUserDto.email !== '' ? editUserDto.email : user.email;
+    user.name = saveUserDto.name ? saveUserDto.name : user.name;
+    user.email = saveUserDto.email ? saveUserDto.email : user.email;
 
     await this.userRepository.save(user);
   }

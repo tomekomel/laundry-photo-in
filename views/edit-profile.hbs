@@ -22,7 +22,7 @@
                 </div>
             {{/if}}
             <br />
-            <form action="../users" method="post">
+            <form action="../users/{{ user.id }}" method="post">
                 <div class="form-group">
                     <label class="form-label" for="name">Login</label>
                     <input class="form-input" id="name" name="name" type="text" value="{{ user.name }}" required="required" />
