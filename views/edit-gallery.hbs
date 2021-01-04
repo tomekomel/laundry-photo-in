@@ -45,12 +45,12 @@
                                     <div class="form-group">
                                         <label class="form-label" for="title">Title</label>
                                         <input class="form-input" id="title" name="photos[{{ this.id }}][title]"
-                                            type="text" required="required" value="{{ gallery.title }}" />
+                                            type="text" required="required" value="{{ this.title }}" />
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="description">Gallery description</label>
                                         <textarea class="form-input" id="description"
-                                            name="photos[{{ this.id }}][description]" rows="5">{{ gallery.description }}</textarea>
+                                            name="photos[{{ this.id }}][description]" rows="5">{{ this.description }}</textarea>
                                         <input type="hidden" name="photos[{{ this.id }}][photoId]" value="{{ this.id }}" />
                                     </div>
                                 </div>

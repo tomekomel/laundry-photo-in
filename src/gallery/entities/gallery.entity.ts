@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -26,7 +27,10 @@ export class Gallery {
   @ManyToOne(() => Country, (country) => country.galleries, { nullable: true })
   country: Country;
 
-  @OneToMany(() => Photo, (photo) => photo.gallery)
+  @OneToMany(() => Photo, (photo) => photo.gallery, {
+    cascade: ['update'],
+  })
+  @JoinTable()
   photos: Photo[];
 
   @ManyToOne(() => User)

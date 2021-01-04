@@ -30,7 +30,7 @@ export class GalleryController {
   @UseGuards(AuthenticatedGuard)
   @Post()
   async saveGallery(@Req() request: Request, @Res() response: Response) {
-    const gallery = await this.galleryService.save(request.body);
+    const gallery = await this.galleryService.create(request.body);
     response.redirect(`/photos/add?galleryId=${gallery.id}`);
   }
 
@@ -76,10 +76,11 @@ export class GalleryController {
   @UseGuards(AuthenticatedGuard)
   @Post('/:id')
   async saveGalleryWithPhotos(
+    @Param('id', ParseIntPipe) id: number,
     @Body() editGalleryDto: EditGalleryDto,
     @Res() response: Response,
   ) {
-    const gallery = await this.galleryService.saveWithPhotos(editGalleryDto);
+    const gallery = await this.galleryService.updateGallery(id, editGalleryDto);
     response.redirect(`/galleries/my`);
   }
 }
