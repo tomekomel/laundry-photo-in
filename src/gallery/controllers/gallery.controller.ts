@@ -65,6 +65,7 @@ export class GalleryController {
   @UseGuards(AuthenticatedGuard)
   @Render('edit-gallery')
   async editGallery(@Param('id', ParseIntPipe) id: number) {
+    console.log(await this.galleryService.findOne(id));
     return {
       gallery: await this.galleryService.findOne(id),
       countries: await this.countryService.findAll(),
