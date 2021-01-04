@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Param,
@@ -16,6 +17,7 @@ import { CountryService } from '../services/country.service';
 import { Request, Response } from 'express';
 import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
+import { EditGalleryDto } from '../dtos/edit-gallery.dto';
 
 @UseFilters(AuthExceptionFilter)
 @Controller('galleries')
@@ -65,10 +67,19 @@ export class GalleryController {
   @UseGuards(AuthenticatedGuard)
   @Render('edit-gallery')
   async editGallery(@Param('id', ParseIntPipe) id: number) {
-    console.log(await this.galleryService.findOne(id));
     return {
       gallery: await this.galleryService.findOne(id),
       countries: await this.countryService.findAll(),
     };
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Post('/:id')
+  async saveGalleryWithPhotos(
+    @Body() editGalleryDto: EditGalleryDto,
+    @Res() response: Response,
+  ) {
+    const gallery = await this.galleryService.saveWithPhotos(editGalleryDto);
+    response.redirect(`/galleries/my`);
   }
 }

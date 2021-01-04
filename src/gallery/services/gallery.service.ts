@@ -7,6 +7,8 @@ import { CreateGalleryDto } from '../dtos/create-gallery.dto';
 import { GalleryDto } from '../dtos/gallery.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
+import { EditGalleryDto } from '../dtos/edit-gallery.dto';
+import { Photo } from '../entities/photo.entity';
 
 @Injectable()
 export class GalleryService {
@@ -63,6 +65,26 @@ export class GalleryService {
     gallery.user = user;
     gallery.country = country;
     gallery.description = createGalleryDto.description;
+
+    return await this.galleryRepository.save(gallery);
+  }
+
+  async saveWithPhotos(editGalleryDto: EditGalleryDto) {
+    const gallery = new Gallery();
+    const country = new Country();
+
+    gallery.title = editGalleryDto.title;
+    country.id = +editGalleryDto.country;
+    gallery.country = country;
+    gallery.description = editGalleryDto.description;
+
+    gallery.photos = editGalleryDto.photos.map((photoDto) => {
+      const photo = new Photo();
+      photo.id = +photoDto.photoId;
+      photo.title = photoDto.title;
+      photo.description = photoDto.description;
+      return photo;
+    });
 
     return await this.galleryRepository.save(gallery);
   }

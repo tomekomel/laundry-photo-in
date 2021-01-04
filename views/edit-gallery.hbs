@@ -1,7 +1,7 @@
 <h1>Edit gallery "{{ gallery.title }}"</h1>
 <br />
 <br />
-<form action="../galleries/{{ gallery.id }}" method="post">
+<form action="../../galleries/{{ gallery.id }}" method="post">
     <div class="container">
         <div class="columns">
             <div class="column col-6">
@@ -44,13 +44,14 @@
                                 <div class="column col-12">
                                     <div class="form-group">
                                         <label class="form-label" for="title">Title</label>
-                                        <input class="form-input" id="title" name="photo[{{ this.id }}]['title']"
+                                        <input class="form-input" id="title" name="photos[{{ this.id }}][title]"
                                             type="text" required="required" value="{{ gallery.title }}" />
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" for="description">Gallery description</label>
                                         <textarea class="form-input" id="description"
-                                            name="photo[{{ this.id }}]['description']" rows="5">{{ gallery.description }}</textarea>
+                                            name="photos[{{ this.id }}][description]" rows="5">{{ gallery.description }}</textarea>
+                                        <input type="hidden" name="photos[{{ this.id }}][photoId]" value="{{ this.id }}" />
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +64,6 @@
         <div class="columns">
             <div class="column col-6">
                 <div class="form-group">
-                    <input type="hidden" name="userId" value="{{ userId }}" />
                     <button class="btn btn-primary" type="submit">Save</button>
                     <a class="btn" href="/">Cancel</a>
                 </div>
