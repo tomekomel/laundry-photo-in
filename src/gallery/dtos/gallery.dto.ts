@@ -8,11 +8,13 @@ export class GalleryDto {
   @IsString()
   title: string;
 
+  @IsOptional()
   @IsString()
-  country: string;
+  country?: string;
 
+  @IsOptional()
   @IsString()
-  photo: string;
+  photo?: string;
 
   @IsString()
   userName: string;

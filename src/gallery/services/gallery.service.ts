@@ -8,7 +8,7 @@ import { GalleryDto } from '../dtos/gallery.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
-import { Photo } from '../entities/photo.entity';
+import { mapToGalleryDto, mapToPhoto } from '../mappers/mappers';
 
 @Injectable()
 export class GalleryService {
@@ -33,15 +33,7 @@ export class GalleryService {
         where: whereConditions,
         order: { created: 'DESC' },
       })
-    ).map((gallery) => ({
-      id: gallery.id,
-      title: gallery.title,
-      description: gallery.description,
-      country: gallery.country ? gallery.country.name : '',
-      photo: gallery.photos.length ? gallery.photos[0].fileName : '',
-      userName: gallery.user.name,
-      created: gallery.created.toLocaleString('pl-PL'),
-    }));
+    ).map((gallery) => mapToGalleryDto(gallery));
   }
 
   findOne(id: number): Promise<Gallery> {
@@ -79,13 +71,9 @@ export class GalleryService {
     gallery.country = country;
     gallery.description = editGalleryDto.description;
 
-    gallery.photos = editGalleryDto.photos.map((photoDto) => {
-      const photo = new Photo();
-      photo.id = +photoDto.photoId;
-      photo.title = photoDto.title;
-      photo.description = photoDto.description;
-      return photo;
-    });
+    gallery.photos = editGalleryDto.photos.map((photoDto) =>
+      mapToPhoto(photoDto),
+    );
 
     return await this.galleryRepository.save(gallery);
   }
