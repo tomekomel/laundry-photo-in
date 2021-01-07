@@ -23,9 +23,18 @@
                     <label class="form-label" for="description">Gallery description</label>
                     <textarea class="form-input" id="description" name="description" rows="5"></textarea>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="latitude">Latitude</label>
-                    <input class="form-input" id="latitude" name="latitude" type="text" required="required" />
+                <div class="form-group paddings20">
+                    <div class="columns paddings20bottom">
+                        <div class="column col-6">
+                            <label class="form-label" for="latitude">Latitude</label>
+                            <input class="form-input" id="latitude" name="latitude" type="text" />
+                        </div>
+                        <div class="column col-6">
+                            <label class="form-label" for="longitude">Longitude</label>
+                            <input class="form-input" id="longitude" name="longitude" type="text" />
+                        </div>
+                    </div>
+
                     <div id="map"></div>
                 </div>
                 <div class="form-group">

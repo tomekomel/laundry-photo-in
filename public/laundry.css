@@ -34,8 +34,11 @@ p {
 .toolbar {
   padding: 30px 0 20px;
 }
-.buttons {
+.buttons, .paddings20 {
   padding: 20px 0 20px;
+}
+.paddings20bottom {
+  padding: 0 0 20px;
 }
 
 .my-galleries .card {
@@ -54,4 +57,9 @@ p {
 }
 .spaces {
   padding: 50px 0;
+}
+
+#map {
+  width: auto;
+  height: 270px;
 }

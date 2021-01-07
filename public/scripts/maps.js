@@ -12,15 +12,25 @@ function initMap() {
     position: { lat: -34.397, lng: 150.644 },
     map: map,
   });
-  // You can use a LatLng literal in place of a google.maps.LatLng object when
-  // creating the Marker object. Once the Marker object is instantiated, its
-  // position will be available as a google.maps.LatLng object. In this case,
-  // we retrieve the marker's position using the
-  // google.maps.LatLng.getPosition() method.
-  const infoWindow = new google.maps.InfoWindow({
-    content: '<p>Marker Location:' + marker.getPosition() + '</p>',
+  const myLatlng = { lat: -25.363, lng: 131.044 };
+
+  // Create the initial InfoWindow.
+  let infoWindow = new google.maps.InfoWindow({
+    content: "Click the map to get Lat/Lng!",
+    position: myLatlng,
   });
-  google.maps.event.addListener(marker, 'click', () => {
-    infoWindow.open(map, marker);
+  infoWindow.open(map);
+  // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+    infoWindow.close();
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    });
+    infoWindow.setContent(
+      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    );
+    infoWindow.open(map);
   });
 }
