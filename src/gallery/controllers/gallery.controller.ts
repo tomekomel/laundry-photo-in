@@ -12,9 +12,11 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Request, Response } from 'express';
+
 import { GalleryService } from '../services/gallery.service';
 import { CountryService } from '../services/country.service';
-import { Request, Response } from 'express';
 import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
@@ -25,6 +27,7 @@ export class GalleryController {
   constructor(
     private readonly galleryService: GalleryService,
     private readonly countryService: CountryService,
+    private readonly configService: ConfigService,
   ) {}
 
   @UseGuards(AuthenticatedGuard)
@@ -41,6 +44,7 @@ export class GalleryController {
     return {
       countries: await this.countryService.findAll(),
       userId: request.user.id,
+      mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };
   }
 
