@@ -1,4 +1,9 @@
 let map;
+const markerIcon =
+  window.location.protocol +
+  '//' +
+  window.location.host +
+  '/images/placeholder.png';
 
 function initMap() {
   const mapOptions = {
@@ -6,28 +11,23 @@ function initMap() {
     center: { lat: 53.13, lng: 23.16 },
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  const myLatLng = { lat: 53.13, lng: 23.16 };
-  let infoWindow = new google.maps.InfoWindow({
-    content: 'Click the map to get Lat/Lng!',
-    position: myLatLng,
-  });
-  infoWindow.open(map);
 
-  localizeMap(map, infoWindow);
+  localizeMap(map);
+
+  const marker = new google.maps.Marker({
+    position: { lat: 53.13, lng: 23.16 },
+    map,
+    icon: markerIcon,
+  });
 
   map.addListener('click', (mapsMouseEvent) => {
-    infoWindow.close();
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng,
-    });
-    infoWindow.setContent(
-      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
-    );
-    infoWindow.open(map);
+    marker.setPosition(mapsMouseEvent.latLng);
   });
 }
 
-function localizeMap(map, infoWindow) {
+function localizeMap(map) {
+  let infoWindow = new google.maps.InfoWindow();
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -36,8 +36,6 @@ function localizeMap(map, infoWindow) {
           lng: position.coords.longitude,
         };
         infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        infoWindow.open(map);
         map.setCenter(pos);
       },
       () => {
