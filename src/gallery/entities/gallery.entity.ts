@@ -36,6 +36,12 @@ export class Gallery {
   @ManyToOne(() => User)
   user: User;
 
+  @Column({ type: 'float', precision: 10, scale: 6 })
+  latitude: number;
+
+  @Column({ type: 'float', precision: 10, scale: 6 })
+  longitude: number;
+
   @CreateDateColumn()
   created!: Date;
 

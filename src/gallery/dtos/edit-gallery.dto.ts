@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { PhotoDto } from './photo.dto';
 
 export class EditGalleryDto {
@@ -13,6 +13,12 @@ export class EditGalleryDto {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @IsOptional()
+  latitude: number;
+
+  @IsOptional()
+  longitude: number;
 
   photos: PhotoDto[];
 }

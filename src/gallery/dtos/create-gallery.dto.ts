@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateGalleryDto {
   @IsNotEmpty()
@@ -16,4 +16,10 @@ export class CreateGalleryDto {
   @IsNotEmpty()
   @IsString()
   description: string;
+
+  @IsOptional()
+  latitude: number;
+
+  @IsOptional()
+  longitude: number;
 }

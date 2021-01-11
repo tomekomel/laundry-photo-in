@@ -13,6 +13,14 @@ export class GalleryDto {
   country?: string;
 
   @IsOptional()
+  @IsNumber()
+  latitude?: number;
+
+  @IsOptional()
+  @IsNumber()
+  longitude?: number;
+
+  @IsOptional()
   @IsString()
   photo?: string;
 

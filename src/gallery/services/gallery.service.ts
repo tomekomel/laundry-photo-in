@@ -57,6 +57,8 @@ export class GalleryService {
     gallery.user = user;
     gallery.country = country;
     gallery.description = createGalleryDto.description;
+    gallery.latitude = createGalleryDto.latitude;
+    gallery.longitude = createGalleryDto.longitude;
 
     return await this.galleryRepository.save(gallery);
   }
@@ -70,6 +72,8 @@ export class GalleryService {
     country.id = +editGalleryDto.country;
     gallery.country = country;
     gallery.description = editGalleryDto.description;
+    gallery.latitude = editGalleryDto.latitude;
+    gallery.longitude = editGalleryDto.longitude;
 
     gallery.photos = editGalleryDto.photos.map((photoDto) =>
       mapToPhoto(photoDto),

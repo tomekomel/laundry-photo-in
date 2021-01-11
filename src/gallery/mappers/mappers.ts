@@ -10,6 +10,8 @@ export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
     description: gallery.description,
     userName: gallery.user.name,
     created: gallery.created.toLocaleString('pl-PL'),
+    latitude: gallery.latitude,
+    longitude: gallery.longitude,
   };
 
   if (gallery.photos.length) {

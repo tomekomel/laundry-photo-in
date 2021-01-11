@@ -18,8 +18,14 @@ function initMap() {
 }
 
 function createMarker(map) {
+  const position = areLatLngSetInTextFields()
+    ? getLatLngFromTextFields()
+    : defaultPosition;
+
+  console.log(position);
+
   const marker = new google.maps.Marker({
-    position: defaultPosition,
+    position: position,
     map,
     icon: markerIcon,
     draggable: true,
@@ -34,6 +40,20 @@ function createMarker(map) {
     marker.setPosition(mapsMouseEvent.latLng);
     updateTextFields(mapsMouseEvent.latLng);
   });
+}
+
+function areLatLngSetInTextFields() {
+  return (
+    document.getElementById('latitude').value &&
+    document.getElementById('longitude').value
+  );
+}
+
+function getLatLngFromTextFields() {
+  return {
+    lat: +document.getElementById('latitude').value,
+    lng: +document.getElementById('longitude').value,
+  };
 }
 
 function updateTextFields(location) {
