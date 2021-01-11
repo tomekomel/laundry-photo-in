@@ -74,6 +74,7 @@ export class GalleryController {
     return {
       gallery: await this.galleryService.findOne(id),
       countries: await this.countryService.findAll(),
+      mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };
   }
 

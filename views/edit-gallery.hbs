@@ -7,26 +7,41 @@
             <div class="column col-6">
                 <span class="mdl-textfield__error">{{ message }}</span>
 
-                    <div class="form-group">
-                        <label class="form-label" for="title">Title</label>
-                        <input class="form-input" id="title" name="title" type="text"
-                               required="required" value="{{ gallery.title }}" />
+                <div class="form-group">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-input" id="title" name="title" type="text"
+                           required="required" value="{{ gallery.title }}" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="country">Country</label>
+                    <select name="country" class="form-select" required="required">
+                        <option value="">- select country -</option>
+                        {{#each countries}}
+                            <option value="{{ this.id }}" {{#if (eq this.id ../gallery.country.id)}} selected {{/if}}>
+                                {{ this.name }}
+                            </option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="description">Gallery description</label>
+                    <textarea class="form-input" id="description" name="description" rows="5">{{ gallery.description }}</textarea>
+                </div>
+
+                <div class="form-group paddings20">
+                    <div class="columns paddings20bottom">
+                        <div class="column col-6">
+                            <label class="form-label" for="latitude">Latitude</label>
+                            <input class="form-input" id="latitude" name="latitude" type="text" />
+                        </div>
+                        <div class="column col-6">
+                            <label class="form-label" for="longitude">Longitude</label>
+                            <input class="form-input" id="longitude" name="longitude" type="text" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="country">Country</label>
-                        <select name="country" class="form-select" required="required">
-                            <option value="">- select country -</option>
-                            {{#each countries}}
-                                <option value="{{ this.id }}" {{#if (eq this.id ../gallery.country.id)}} selected {{/if}}>
-                                    {{ this.name }}
-                                </option>
-                            {{/each}}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="description">Gallery description</label>
-                        <textarea class="form-input" id="description" name="description" rows="5">{{ gallery.description }}</textarea>
-                    </div>
+
+                    <div id="map"></div>
+                </div>
             </div>
         </div>
 
@@ -71,3 +86,9 @@
         </div>
     </div>
 </form>
+
+<script
+        src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
+defer
+></script>
+<script src="../../../scripts/maps.js"></script>
