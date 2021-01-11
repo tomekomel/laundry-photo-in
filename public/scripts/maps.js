@@ -4,25 +4,41 @@ const markerIcon =
   '//' +
   window.location.host +
   '/images/placeholder.png';
+const defaultPosition = { lat: 53.13, lng: 23.16 };
+const mapOptions = {
+  zoom: 8,
+  center: defaultPosition,
+};
 
 function initMap() {
-  const mapOptions = {
-    zoom: 8,
-    center: { lat: 53.13, lng: 23.16 },
-  };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
   localizeMap(map);
+  createMarker(map);
+}
 
+function createMarker(map) {
   const marker = new google.maps.Marker({
-    position: { lat: 53.13, lng: 23.16 },
+    position: defaultPosition,
     map,
     icon: markerIcon,
+    draggable: true,
   });
 
   map.addListener('click', (mapsMouseEvent) => {
     marker.setPosition(mapsMouseEvent.latLng);
+    updateTextFields(mapsMouseEvent.latLng);
   });
+
+  google.maps.event.addListener(marker, 'dragend', (mapsMouseEvent) => {
+    marker.setPosition(mapsMouseEvent.latLng);
+    updateTextFields(mapsMouseEvent.latLng);
+  });
+}
+
+function updateTextFields(location) {
+  document.getElementById('latitude').value = location.lat();
+  document.getElementById('longitude').value = location.lng();
 }
 
 function localizeMap(map) {
