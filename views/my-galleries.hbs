@@ -1,5 +1,11 @@
 <h1>My galleries</h1>
 
+<a href="/galleries/create">
+<button class="btn btn-primary">
+    <i class="icon icon-plus"></i>
+</button>
+</a>
+
 <div class="columns my-galleries">
 {{#each galleries}}
     <div class="column col-4 col-xs-12">
@@ -16,9 +22,9 @@
                     <i class="icon icon-delete"></i>
                 </button>
                 <a href="/photos/add?galleryId={{ this.id }}">
-                <button class="btn btn-primary float-right">
-                    <i class="icon icon-upload"></i>
-                </button>
+                    <button class="btn btn-primary float-right">
+                        <i class="icon icon-upload"></i>
+                    </button>
                 </a>
                 <a href="/galleries/{{ this.id }}/edit">
                     <button class="btn btn-primary float-right">

@@ -64,15 +64,21 @@ function updateTextFields(location) {
 function localizeMap(map) {
   let infoWindow = new google.maps.InfoWindow();
 
+  if (areLatLngSetInTextFields()) {
+    const fromTextFieldsPosition = getLatLngFromTextFields();
+    map.setCenter(fromTextFieldsPosition);
+    return;
+  }
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const pos = {
+        const currentPosition = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        infoWindow.setPosition(pos);
-        map.setCenter(pos);
+        infoWindow.setPosition(currentPosition);
+        map.setCenter(currentPosition);
       },
       () => {
         handleLocationError(true, infoWindow, map.getCenter());
