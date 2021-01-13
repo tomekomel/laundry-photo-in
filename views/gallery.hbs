@@ -18,5 +18,20 @@
 <div class="gallery">
     {{#each gallery.photos}}
         <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
+        <p>{{ this.title }}</p>
     {{/each}}
 </div>
+
+<div id="map"></div>
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
+defer
+></script>
+<script src="../../../scripts/view-gallery-map.js"></script>
+<script type="text/javascript">
+    function initMap() {
+        const galleryMap = new ViewGalleryMap({{ gallery.latitude }}, {{ gallery.longitude }});
+        galleryMap.display();
+    }
+</script>

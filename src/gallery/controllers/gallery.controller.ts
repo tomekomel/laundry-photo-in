@@ -64,7 +64,10 @@ export class GalleryController {
   @Get('/:id')
   @Render('gallery')
   async getGallery(@Param() id: number) {
-    return { gallery: await this.galleryService.findOne(id) };
+    return {
+      gallery: await this.galleryService.findOne(id),
+      mapsApiKey: this.configService.get('MAPS_API_KEY'),
+    };
   }
 
   @Get('/:id/edit')
