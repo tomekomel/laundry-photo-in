@@ -70,3 +70,8 @@ p {
   width: auto;
   height: 270px;
 }
+
+.gallery #map {
+  max-width: 1200px;
+  height: 400px;
+}

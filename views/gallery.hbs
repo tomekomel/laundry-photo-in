@@ -20,9 +20,10 @@
         <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
         <p>{{ this.title }}</p>
     {{/each}}
-</div>
 
-<div id="map"></div>
+    <h3>Localisation:</h3>
+    <div id="map"></div>
+</div>
 
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
