@@ -1,4 +1,6 @@
 import {
+  AfterInsert,
+  AfterLoad,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -50,4 +52,21 @@ export class Gallery {
 
   @DeleteDateColumn()
   deleted: Date;
+
+  @Column()
+  hits: number;
+
+  @AfterInsert()
+  resetHits() {
+    this.hits = 0;
+  }
+
+  @AfterLoad()
+  updateHits() {
+    if (this.hits === undefined) {
+      this.hits = 0;
+    }
+
+    this.hits++;
+  }
 }
