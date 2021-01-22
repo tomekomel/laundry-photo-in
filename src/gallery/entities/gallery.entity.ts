@@ -35,7 +35,7 @@ export class Gallery {
   @JoinTable()
   photos: Photo[];
 
-  @OneToMany(() => Comment, (comment) => comment.gallery)
+  @OneToMany(() => Comment, (comment) => comment.gallery, { nullable: true })
   @JoinTable()
   comments: Comment[];
 

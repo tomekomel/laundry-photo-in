@@ -6,6 +6,8 @@ import { Comment } from '../entities/comment.entity';
 import { Gallery } from '../../gallery/entities/gallery.entity';
 import { User } from '../../user/entities/user.entity';
 import { CreateCommentDto } from '../dtos/create-comment.dto';
+import { CommentDto } from '../dtos/comment.dto';
+import { mapToCommentDto } from '../mappers/comment.mapper';
 
 @Injectable()
 class CommentService {
@@ -28,5 +30,21 @@ class CommentService {
     gallery.id = createCommentDto.galleryId;
 
     return await this.commentRepository.save(comment);
+  }
+
+  async findAll(galleryId = 0): Promise<CommentDto[]> {
+    let whereConditions = {};
+
+    if (galleryId) {
+      whereConditions = { gallery: { id: galleryId } };
+    }
+
+    return (
+      await this.commentRepository.find({
+        relations: ['gallery'],
+        where: whereConditions,
+        order: { created: 'ASC' },
+      })
+    ).map(comment => mapToCommentDto(comment));
   }
 }
