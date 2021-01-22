@@ -1,6 +1,5 @@
 import {
   AfterInsert,
-  AfterLoad,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -14,6 +13,7 @@ import {
 import { Country } from './country.entity';
 import { Photo } from './photo.entity';
 import { User } from '../../user/entities/user.entity';
+import { Comment } from '../../comment/entities/comment.entity';
 
 @Entity()
 export class Gallery {
@@ -34,6 +34,10 @@ export class Gallery {
   })
   @JoinTable()
   photos: Photo[];
+
+  @OneToMany(() => Comment, (comment) => comment.gallery)
+  @JoinTable()
+  comments: Comment[];
 
   @ManyToOne(() => User)
   user: User;
