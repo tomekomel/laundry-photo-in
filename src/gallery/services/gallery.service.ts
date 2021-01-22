@@ -81,4 +81,12 @@ export class GalleryService {
 
     return await this.galleryRepository.save(gallery);
   }
+
+  async incrementHits(gallery: Gallery, userId: number) {
+    if (gallery.user.id === userId) {
+      return;
+    }
+    gallery.hits++;
+    await this.galleryRepository.save(gallery);
+  }
 }

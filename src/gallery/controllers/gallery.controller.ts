@@ -8,12 +8,13 @@ import {
   Query,
   Render,
   Req,
+  Request,
   Res,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
+import { Request as RequestObject, Response } from 'express';
 
 import { GalleryService } from '../services/gallery.service';
 import { CountryService } from '../services/country.service';
@@ -32,7 +33,7 @@ export class GalleryController {
 
   @UseGuards(AuthenticatedGuard)
   @Post()
-  async saveGallery(@Req() request: Request, @Res() response: Response) {
+  async saveGallery(@Req() request: RequestObject, @Res() response: Response) {
     const gallery = await this.galleryService.create(request.body);
     response.redirect(`/photos/add?galleryId=${gallery.id}`);
   }
@@ -63,9 +64,14 @@ export class GalleryController {
 
   @Get('/:id')
   @Render('gallery')
-  async getGallery(@Param() id: number) {
+  async getGallery(@Param() id: number, @Request() request) {
+    const gallery = await this.galleryService.findOne(id);
+    await this.galleryService.incrementHits(
+      gallery,
+      request.user ? request.user.id : 0,
+    );
     return {
-      gallery: await this.galleryService.findOne(id),
+      gallery,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };
   }
@@ -88,7 +94,7 @@ export class GalleryController {
     @Body() editGalleryDto: EditGalleryDto,
     @Res() response: Response,
   ) {
-    const gallery = await this.galleryService.updateGallery(id, editGalleryDto);
+    await this.galleryService.updateGallery(id, editGalleryDto);
     response.redirect(`/galleries/my`);
   }
 }

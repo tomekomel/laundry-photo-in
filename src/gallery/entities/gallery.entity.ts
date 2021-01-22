@@ -60,13 +60,4 @@ export class Gallery {
   resetHits() {
     this.hits = 0;
   }
-
-  @AfterLoad()
-  updateHits() {
-    if (this.hits === undefined) {
-      this.hits = 0;
-    }
-
-    this.hits++;
-  }
 }
