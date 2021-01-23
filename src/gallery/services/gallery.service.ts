@@ -4,11 +4,16 @@ import { Repository } from 'typeorm';
 
 import { Gallery } from '../entities/gallery.entity';
 import { CreateGalleryDto } from '../dtos/create-gallery.dto';
-import { GalleryDto } from '../dtos/gallery.dto';
+import { GalleryListDto } from '../dtos/gallery-list.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
-import { mapToGalleryDto, mapToPhoto } from '../mappers/mappers';
+import {
+  mapToGalleryDto,
+  mapToGalleryListDto,
+  mapToPhoto,
+} from '../mappers/mappers';
+import { GalleryDto } from '../dtos/gallery.dto';
 
 @Injectable()
 export class GalleryService {
@@ -17,7 +22,7 @@ export class GalleryService {
     private readonly galleryRepository: Repository<Gallery>,
   ) {}
 
-  async findAll(countryId = 0, userId = 0): Promise<GalleryDto[]> {
+  async findAll(countryId = 0, userId = 0): Promise<GalleryListDto[]> {
     let whereConditions = {};
 
     if (countryId) {
@@ -33,11 +38,11 @@ export class GalleryService {
         where: whereConditions,
         order: { created: 'DESC' },
       })
-    ).map((gallery) => mapToGalleryDto(gallery));
+    ).map((gallery) => mapToGalleryListDto(gallery));
   }
 
-  findOne(id: number): Promise<Gallery> {
-    return this.galleryRepository.findOne(id, {
+  async findOne(id: number): Promise<Gallery> {
+    return await this.galleryRepository.findOne(id, {
       relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
     });
   }

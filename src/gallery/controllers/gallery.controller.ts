@@ -21,6 +21,7 @@ import { CountryService } from '../services/country.service';
 import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
+import { mapToGalleryDto } from '../mappers/mappers';
 
 @UseFilters(AuthExceptionFilter)
 @Controller('galleries')
@@ -71,7 +72,7 @@ export class GalleryController {
       request.user ? request.user.id : 0,
     );
     return {
-      gallery,
+      gallery: mapToGalleryDto(gallery),
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };
   }

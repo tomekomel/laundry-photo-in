@@ -13,7 +13,7 @@
 </ul>
 
 <div class="toolbar">
-    <small class="label">Country: {{ gallery.country.name }} | User: {{ gallery.user.name }}</small>
+    <small class="label">Country: {{ gallery.country }} | User: {{ gallery.userName }}</small>
 </div>
 <div class="gallery">
     {{#each gallery.photos}}
@@ -32,7 +32,7 @@
             <tr>
                 <td>{{ this.content }}</td>
                 <td>
-                    {{ this.user.name }}<br />
+                    {{ this.userName }}<br />
                     {{ this.created }}
                 </td>
             </tr>

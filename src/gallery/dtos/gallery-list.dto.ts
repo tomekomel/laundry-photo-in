@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class GalleryDto {
+export class GalleryListDto {
   @IsNumber()
   id: number;
 
@@ -21,18 +21,8 @@ export class GalleryDto {
   longitude?: number;
 
   @IsOptional()
-  photos?: {
-    fileName: string;
-    alt: string;
-    title: string;
-  }[];
-
-  @IsOptional()
-  comments?: {
-    content: string;
-    created: string;
-    userName: string;
-  }[];
+  @IsString()
+  photo?: string;
 
   @IsString()
   userName: string;
