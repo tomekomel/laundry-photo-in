@@ -66,6 +66,13 @@ p {
   padding: 50px 0;
 }
 
+.comments {
+  padding: 90px 0 90px;
+}
+.comments .table {
+  max-width: 1200px;
+}
+
 #map {
   width: auto;
   height: 270px;

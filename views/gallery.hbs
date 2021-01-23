@@ -23,6 +23,23 @@
 
     <h3>Localisation:</h3>
     <div id="map"></div>
+
+    <div class="comments">
+        <h3>Comments:</h3>
+        <table class="table">
+            <tbody>
+            {{#each gallery.comments}}
+            <tr>
+                <td>{{ this.content }}</td>
+                <td>
+                    {{ this.user.name }}<br />
+                    {{ this.created }}
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script

@@ -38,7 +38,7 @@ export class GalleryService {
 
   findOne(id: number): Promise<Gallery> {
     return this.galleryRepository.findOne(id, {
-      relations: ['photos', 'user', 'country', 'comments'],
+      relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
     });
   }
 
