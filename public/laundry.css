@@ -72,6 +72,9 @@ p {
 .comments .table {
   max-width: 1200px;
 }
+.comments .add-comment {
+  margin: 40px 0 40px;
+}
 
 #map {
   width: auto;

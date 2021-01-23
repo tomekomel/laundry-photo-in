@@ -67,12 +67,12 @@ export class GalleryController {
   @Render('gallery')
   async getGallery(@Param() id: number, @Request() request) {
     const gallery = await this.galleryService.findOne(id);
-    await this.galleryService.incrementHits(
-      gallery,
-      request.user ? request.user.id : 0,
-    );
+    const userId = request.user ? request.user.id : 0;
+
+    await this.galleryService.incrementHits(gallery, userId);
     return {
       gallery: mapToGalleryDto(gallery),
+      userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };
   }
