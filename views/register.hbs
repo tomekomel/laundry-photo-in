@@ -1,0 +1,48 @@
+<h1>Sign up to dryinglaundry.art</h1>
+<br />
+{{#if userId}}
+    <h3>You are already logged in.</h3>
+{{else}}
+<br />
+<div class="container">
+    <div class="columns">
+        <div class="column col-6">
+            <span class="mdl-textfield__error">{{ message }}</span>
+            <form action="../auth/register" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="name">Login</label>
+                    <input class="form-input" id="name" name="name" type="text" required="required" />
+                </div>
+                <div class="form-group paddings20">
+                    <div class="columns paddings20bottom">
+                        <div class="column col-6">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-input" id="email" name="email" type="text" required="required" />
+                        </div>
+                        <div class="column col-6">
+                            <label class="form-label" for="email-2">Repeat Email</label>
+                            <input class="form-input" id="email-2" name="email2" type="text" required="required" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group paddings20">
+                    <div class="columns paddings20bottom">
+                        <div class="column col-6">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-input" id="password" name="password" type="password" required="required" />
+                        </div>
+                        <div class="column col-6">
+                            <label class="form-label" for="password-2">Repeat Password</label>
+                            <input class="form-input" id="password-2" name="password2" type="password" required="required" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Register</button>
+                    <a class="btn" href="/">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{/if}}
