@@ -10,7 +10,7 @@ import { CommentDto } from '../dtos/comment.dto';
 import { mapToCommentDto } from '../mappers/comment.mapper';
 
 @Injectable()
-class CommentService {
+export class CommentService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentRepository: Repository<Comment>,
@@ -26,8 +26,10 @@ class CommentService {
     const user = new User();
 
     comment.content = createCommentDto.content;
-    user.id = createCommentDto.userId;
-    gallery.id = createCommentDto.galleryId;
+    user.id = +createCommentDto.userId;
+    gallery.id = +createCommentDto.galleryId;
+    comment.gallery = gallery;
+    comment.user = user;
 
     return await this.commentRepository.save(comment);
   }
