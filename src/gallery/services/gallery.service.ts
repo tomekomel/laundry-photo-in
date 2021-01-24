@@ -8,12 +8,7 @@ import { GalleryListDto } from '../dtos/gallery-list.dto';
 import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
-import {
-  mapToGalleryDto,
-  mapToGalleryListDto,
-  mapToPhoto,
-} from '../mappers/mappers';
-import { GalleryDto } from '../dtos/gallery.dto';
+import { mapToGalleryListDto, mapToPhoto } from '../mappers/mappers';
 
 @Injectable()
 export class GalleryService {
@@ -45,6 +40,10 @@ export class GalleryService {
     return await this.galleryRepository.findOne(id, {
       relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
     });
+  }
+
+  async findBySlug(slug: string): Promise<Gallery[]> {
+    return await this.galleryRepository.find({ where: { slug } });
   }
 
   async delete(id: string): Promise<void> {

@@ -1,5 +1,6 @@
 import {
   AfterInsert,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -22,6 +23,9 @@ export class Gallery {
 
   @Column()
   title: string;
+
+  @Column()
+  slug: string;
 
   @Column()
   description: string;
@@ -64,4 +68,7 @@ export class Gallery {
   resetHits() {
     this.hits = 0;
   }
+
+  @BeforeInsert()
+  generateSlug() {}
 }
