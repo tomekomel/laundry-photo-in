@@ -11,6 +11,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 import { Country } from './country.entity';
 import { Photo } from './photo.entity';
 import { User } from '../../user/entities/user.entity';
@@ -64,11 +65,8 @@ export class Gallery {
   @Column()
   hits: number;
 
-  @AfterInsert()
+  @BeforeInsert()
   resetHits() {
     this.hits = 0;
   }
-
-  @BeforeInsert()
-  generateSlug() {}
 }

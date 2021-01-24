@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { default as slugify } from 'slugify';
 
 import { Gallery } from '../entities/gallery.entity';
 import { CreateGalleryDto } from '../dtos/create-gallery.dto';
@@ -50,6 +51,16 @@ export class GalleryService {
     await this.galleryRepository.delete(id);
   }
 
+  private async prepareSlug(title: string): Promise<string> {
+    let slug = slugify(title, { lower: true });
+    const galleriesWithSlug = await this.findBySlug(slug);
+
+    if (galleriesWithSlug.length) {
+      slug = `${slug}-${galleriesWithSlug.length + 1}`;
+    }
+    return slug;
+  }
+
   async create(createGalleryDto: CreateGalleryDto): Promise<Gallery> {
     const gallery = new Gallery();
     const country = new Country();
@@ -63,15 +74,19 @@ export class GalleryService {
     gallery.description = createGalleryDto.description;
     gallery.latitude = createGalleryDto.latitude;
     gallery.longitude = createGalleryDto.longitude;
+    gallery.slug = await this.prepareSlug(gallery.title);
 
     return await this.galleryRepository.save(gallery);
   }
 
   async updateGallery(galleryId: number, editGalleryDto: EditGalleryDto) {
-    const gallery = new Gallery();
+    const gallery = await this.findOne(galleryId);
     const country = new Country();
 
-    gallery.id = galleryId;
+    if (gallery.title !== editGalleryDto.title) {
+      gallery.slug = await this.prepareSlug(editGalleryDto.title);
+    }
+
     gallery.title = editGalleryDto.title;
     country.id = +editGalleryDto.country;
     gallery.country = country;
@@ -79,9 +94,11 @@ export class GalleryService {
     gallery.latitude = editGalleryDto.latitude;
     gallery.longitude = editGalleryDto.longitude;
 
-    gallery.photos = editGalleryDto.photos.map((photoDto) =>
-      mapToPhoto(photoDto),
-    );
+    if (editGalleryDto.photos) {
+      gallery.photos = editGalleryDto.photos.map((photoDto) =>
+        mapToPhoto(photoDto),
+      );
+    }
 
     return await this.galleryRepository.save(gallery);
   }
