@@ -10,7 +10,7 @@ import { User } from '../../user/entities/user.entity';
 import { Photo } from '../../gallery/entities/photo.entity';
 
 @Entity()
-export class Comment {
+export class Favorite {
   @PrimaryGeneratedColumn()
   id: number;
 
