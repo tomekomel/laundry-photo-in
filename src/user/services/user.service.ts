@@ -4,10 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
+import { PasswordsMismatchException } from '../exceptions/passwords-mismatch.exception';
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 import { UserNameAlreadyExistsException } from '../exceptions/user-name-already-exists.exception';
 import { SaveUserDto } from '../dtos/save-user.dto';
+import { EmailsMismatchException } from '../exceptions/emails-mismatch.exception'
+import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
 
 @Injectable()
 export class UserService {
@@ -28,8 +30,8 @@ export class UserService {
   }
 
   async create(userDto: CreateUserDto) {
+    this.validateCreateUserDto(userDto);
     const { name, email, password } = userDto;
-
     const existingUser = await this.findOneByName(name);
 
     if (existingUser) {
@@ -41,6 +43,18 @@ export class UserService {
     user.email = email;
     user.password = password;
     await this.userRepository.save(user);
+  }
+
+  private validateCreateUserDto(userDto: CreateUserDto) {
+    const { email, email2, password, password2 } = userDto;
+
+    if (email !== email2) {
+      throw new EmailsMismatchException();
+    }
+
+    if (password !== password2) {
+      throw new PasswordsMismatchException();
+    }
   }
 
   async save(saveUserDto: SaveUserDto) {

@@ -53,9 +53,18 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    await this.userService.create(createUserDto);
-    res.redirect('/auth/registered');
+  async register(
+    @Body() createUserDto: CreateUserDto,
+    @Request() req,
+    @Res() res: Response,
+  ) {
+    try {
+      await this.userService.create(createUserDto);
+      res.redirect('/auth/registered');
+    } catch (e) {
+      req.flash('loginError', e.message);
+      res.redirect('/auth/register');
+    }
   }
 
   @Get('registered')
