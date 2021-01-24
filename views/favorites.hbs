@@ -1,0 +1,24 @@
+<h1>My favorites photos</h1>
+
+<div class="columns my-galleries">
+{{#each favorites}}
+    <div class="column col-4 col-xs-12">
+        <div class="card">
+            {{#if this.fileName}}
+                <div class="card-image">
+                    <a href="/galleries/{{ this.galleryId }}" target="_blank">
+                        <img src="../uploads/600x600/{{ this.fileName }}" alt="{{ this.title }}" />
+                    </a>
+                </div>
+            {{/if}}
+            <div class="card-header">
+                <button class="btn btn-primary float-right">
+                    <i class="icon icon-delete"></i>
+                </button>
+                <div class="card-title h5">{{ this.title }}</div>
+            </div>
+            <div class="card-body">{{ this.description }}</div>
+        </div>
+    </div>
+{{/each}}
+</div>
