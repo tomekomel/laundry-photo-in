@@ -9,6 +9,9 @@ export class FavoriteDto {
   @IsNumber()
   photoId: number;
 
+  @IsString()
+  fileName: string;
+
   @IsNotEmpty()
   @IsNumber()
   galleryId: number;

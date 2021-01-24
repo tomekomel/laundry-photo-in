@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res } from '@nestjs/common';
 import { CreateFavoriteDto } from '../dtos/create-favorite.dto';
-import { Response } from 'express';
 import { FavoriteService } from '../services/favorite.service';
 
 @Controller('favorites')
@@ -8,9 +7,9 @@ export class FavoriteController {
   constructor(private readonly favoriteService: FavoriteService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async createFavorite(
-    @Body() createFavoriteDto: CreateFavoriteDto,
-    @Res() response: Response,
+    @Body() createFavoriteDto: CreateFavoriteDto
   ) {
     await this.favoriteService.create(createFavoriteDto);
   }

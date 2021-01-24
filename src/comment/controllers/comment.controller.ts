@@ -11,11 +11,11 @@ export class CommentController {
 
   @UseGuards(AuthenticatedGuard)
   @Post()
-  async saveGallery(
+  async createComment(
     @Body() createCommentDto: CreateCommentDto,
     @Res() response: Response,
   ) {
-    const comment = await this.commentService.create(createCommentDto);
+    await this.commentService.create(createCommentDto);
     response.redirect(`/galleries/${createCommentDto.galleryId}#comments`);
   }
 }
