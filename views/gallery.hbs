@@ -15,10 +15,15 @@
 <div class="toolbar">
     <small class="label">Country: {{ gallery.country }} | User: {{ gallery.userName }}</small>
 </div>
-<div class="gallery">
+<div id="gallery" class="gallery">
     {{#each gallery.photos}}
         <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
-        <p>{{ this.title }}</p>
+        <p>
+            {{ this.title }}
+            {{#if ../userId }}
+                | Add to favorites: <i class="icon icon-bookmark icon-selected"></i>
+            {{/if}}
+        </p>
     {{/each}}
 
     <h3>Localisation:</h3>
@@ -63,6 +68,8 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
 defer
@@ -73,4 +80,12 @@ defer
         const galleryMap = new ViewGalleryMap({{ gallery.latitude }}, {{ gallery.longitude }});
         galleryMap.display();
     }
+</script>
+<script>
+    var app = new Vue({
+        el: '#gallery',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
 </script>
