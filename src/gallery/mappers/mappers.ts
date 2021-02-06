@@ -17,6 +17,7 @@ export const mapToGalleryListDto = (gallery: Gallery): GalleryListDto => {
     created: gallery.created.toLocaleString('pl-PL'),
     latitude: gallery.latitude,
     longitude: gallery.longitude,
+    slug: gallery.slug || gallery.id.toString(),
   };
 
   if (gallery.photos.length) {

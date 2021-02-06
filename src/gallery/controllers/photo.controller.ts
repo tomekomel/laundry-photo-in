@@ -56,7 +56,7 @@ export class PhotoController {
   @Get('add')
   @Render('add-photos')
   async addPhotos(@Query('galleryId') galleryId: number) {
-    const gallery = await this.galleryService.findOne(galleryId);
+    const gallery = await this.galleryService.findOneById(galleryId);
 
     if (!galleryId || !gallery) {
       throw new GalleryNotFoundException();

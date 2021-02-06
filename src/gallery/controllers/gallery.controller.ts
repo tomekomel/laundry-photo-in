@@ -63,13 +63,13 @@ export class GalleryController {
     return { galleries: await this.galleryService.findAll(0, request.user.id) };
   }
 
-  @Get('/:id')
+  @Get('/:slug')
   @Render('gallery')
-  async getGallery(@Param() id: number, @Request() request) {
-    const gallery = await this.galleryService.findOne(id);
+  async getGallery(@Param('slug') slug: string, @Request() request) {
+    const gallery = await this.galleryService.findOneBySlug(slug);
     const userId = request.user ? request.user.id : 0;
-
     await this.galleryService.incrementHits(gallery, userId);
+
     return {
       gallery: mapToGalleryDto(gallery),
       userId,
@@ -82,7 +82,7 @@ export class GalleryController {
   @Render('edit-gallery')
   async editGallery(@Param('id', ParseIntPipe) id: number) {
     return {
-      gallery: await this.galleryService.findOne(id),
+      gallery: await this.galleryService.findOneById(id),
       countries: await this.countryService.findAll(),
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
     };

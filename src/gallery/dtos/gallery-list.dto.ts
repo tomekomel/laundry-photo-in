@@ -12,6 +12,9 @@ export class GalleryListDto {
   @IsString()
   country?: string;
 
+  @IsString()
+  slug: string;
+
   @IsOptional()
   @IsNumber()
   latitude?: number;

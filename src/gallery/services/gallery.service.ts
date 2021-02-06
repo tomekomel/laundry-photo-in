@@ -37,8 +37,15 @@ export class GalleryService {
     ).map((gallery) => mapToGalleryListDto(gallery));
   }
 
-  async findOne(id: number): Promise<Gallery> {
+  async findOneById(id: number): Promise<Gallery> {
     return await this.galleryRepository.findOne(id, {
+      relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
+    });
+  }
+
+  async findOneBySlug(slug: string): Promise<Gallery> {
+    return await this.galleryRepository.findOne({
+      where: { slug },
       relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
     });
   }
@@ -52,13 +59,12 @@ export class GalleryService {
   }
 
   private async prepareSlug(title: string): Promise<string> {
-    let slug = slugify(title, { lower: true });
+    const slug = slugify(title, { lower: true });
     const galleriesWithSlug = await this.findBySlug(slug);
 
-    if (galleriesWithSlug.length) {
-      slug = `${slug}-${galleriesWithSlug.length + 1}`;
-    }
-    return slug;
+    return galleriesWithSlug.length
+      ? `${slug}-${galleriesWithSlug.length + 1}`
+      : slug;
   }
 
   async create(createGalleryDto: CreateGalleryDto): Promise<Gallery> {
@@ -80,7 +86,7 @@ export class GalleryService {
   }
 
   async updateGallery(galleryId: number, editGalleryDto: EditGalleryDto) {
-    const gallery = await this.findOne(galleryId);
+    const gallery = await this.findOneById(galleryId);
     const country = new Country();
 
     if (gallery.title !== editGalleryDto.title) {
@@ -104,7 +110,7 @@ export class GalleryService {
   }
 
   async incrementHits(gallery: Gallery, userId: number) {
-    if (gallery.user.id === userId) {
+    if (!gallery || gallery.user.id === userId) {
       return;
     }
     gallery.hits++;
