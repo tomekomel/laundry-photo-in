@@ -13,7 +13,8 @@
 </ul>
 
 <div class="toolbar">
-    <small class="label">Country: {{ gallery.country }} | User: {{ gallery.userName }}</small>
+    <small class="label">Country: {{ gallery.country }} |
+        User: {{ gallery.userName }} | Added: {{ gallery.created }}</small>
 </div>
 <div id="gallery" class="gallery">
     {{#each gallery.photos}}

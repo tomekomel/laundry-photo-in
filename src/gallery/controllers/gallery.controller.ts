@@ -56,7 +56,7 @@ export class GalleryController {
     const countryId = request.query.countrId || 0;
     return await this.galleryService.paginate(countryId, 0, {
       limit: this.configService.get('GALLERIES_ON_PAGE'),
-      page: request.query.hasOwnProperty('page') ? request.query.page : 0,
+      page: request.query.hasOwnProperty('page') ? request.query.page : 1,
     });
   }
 
@@ -66,7 +66,7 @@ export class GalleryController {
   async myGalleries(@Req() request) {
     return await this.galleryService.paginate(0, request.user.id, {
       limit: this.configService.get('MY_GALLERIES_ON_PAGE'),
-      page: request.query.hasOwnProperty('page') ? request.query.page : 0,
+      page: request.query.hasOwnProperty('page') ? request.query.page : 1,
     });
   }
 

@@ -2,15 +2,16 @@
 
 {{#each results}}
     <div class="gallery">
-        <h2><a href="galleries/{{this.slug}}">{{this.title}}</a></h2>
+        <h2><a href="galleries/{{ this.slug }}">{{ this.title }}</a></h2>
 
         {{#if this.photo}}
-            <a href="galleries/{{this.id}}">
+            <a href="galleries/{{ this.slug }}">
                 <img src="../uploads/1200x1200/{{ this.photo }}" alt="{{ this.title }}" />
             </a>
         {{/if}}
         <div class="photo-info">
-            <small class="label">Country: {{this.country}} | User: {{this.userName}}</small>
+            <small class="label">Country: {{ this.country }} |
+               User: {{ this.userName }} | Added: {{ this.created }}</small>
         </div>
     </div>
 {{/each}}

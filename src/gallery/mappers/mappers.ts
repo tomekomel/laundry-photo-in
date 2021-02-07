@@ -14,7 +14,7 @@ export const mapToGalleryListDto = (gallery: Gallery): GalleryListDto => {
     title: gallery.title,
     description: gallery.description,
     userName: gallery.user.name,
-    created: gallery.created.toLocaleString('pl-PL'),
+    created: dayjs().to(dayjs(gallery.created)),
     latitude: gallery.latitude,
     longitude: gallery.longitude,
     slug: gallery.slug || gallery.id.toString(),
@@ -43,7 +43,7 @@ export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
     title: gallery.title,
     description: gallery.description,
     userName: gallery.user.name,
-    created: dayjs(gallery.created.toLocaleString('pl-PL')).format(),
+    created: dayjs().to(dayjs(gallery.created)),
     latitude: gallery.latitude,
     longitude: gallery.longitude,
   };
