@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
 import { default as slugify } from 'slugify';
 
 import { Gallery } from '../entities/gallery.entity';
@@ -43,11 +43,30 @@ export class GalleryService {
     });
   }
 
-  async findOneBySlug(slug: string): Promise<Gallery> {
-    return await this.galleryRepository.findOne({
-      where: { slug },
-      relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
-    });
+  async findOneBySlug(slug: string, userId: number): Promise<Gallery> {
+    const query = await this.galleryRepository
+      .createQueryBuilder('gallery')
+      .leftJoinAndSelect('gallery.photos', 'photo')
+      .leftJoinAndSelect('gallery.user', 'user')
+      .leftJoinAndSelect('gallery.country', 'country')
+      .leftJoinAndSelect('gallery.comments', 'comments')
+      .leftJoinAndSelect('comments.user', 'commentingUsers');
+
+    if (userId) {
+      query
+        .leftJoinAndSelect('photo.favorites', 'favorite')
+        .leftJoinAndSelect('favorite.user', 'favoriteOwner')
+        .where('gallery.slug = :slug', { slug })
+        .andWhere(
+          new Brackets((qb) => {
+            qb.where('favoriteOwner.id = :userId', { userId }).orWhere(
+              'favoriteOwner.id IS NULL',
+            );
+          }),
+        );
+    }
+
+    return query.getOne();
   }
 
   async findBySlug(slug: string): Promise<Gallery[]> {

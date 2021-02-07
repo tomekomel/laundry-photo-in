@@ -3,11 +3,14 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Gallery } from './gallery.entity';
+import { Favorite } from '../../favorite/entities/favorite.entity';
 
 @Entity()
 export class Photo {
@@ -28,6 +31,10 @@ export class Photo {
 
   @ManyToOne(() => Gallery, (gallery) => gallery.photos)
   gallery: Gallery;
+
+  @OneToMany(() => Favorite, (favorite) => favorite.photo, { nullable: true })
+  @JoinTable()
+  favorites: Favorite[];
 
   @CreateDateColumn()
   created!: Date;

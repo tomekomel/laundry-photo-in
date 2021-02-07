@@ -66,8 +66,8 @@ export class GalleryController {
   @Get('/:slug')
   @Render('gallery')
   async getGallery(@Param('slug') slug: string, @Request() request) {
-    const gallery = await this.galleryService.findOneBySlug(slug);
     const userId = request.user ? request.user.id : 0;
+    const gallery = await this.galleryService.findOneBySlug(slug, userId);
     await this.galleryService.incrementHits(gallery, userId);
 
     return {

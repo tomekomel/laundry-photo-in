@@ -97,3 +97,7 @@ p {
   border-bottom: 0;
   border-left: 0;
 }
+
+.gallery .icon-bookmark:hover {
+  cursor: pointer;
+}
