@@ -10,6 +10,8 @@ import { Country } from '../entities/country.entity';
 import { User } from '../../user/entities/user.entity';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
 import { mapToGalleryListDto, mapToPhoto } from '../mappers/mappers';
+import { PaginationOptionsInterface } from '../../common/paginate/pagination.options.interface';
+import { Pagination } from '../../common/paginate/pagination';
 
 @Injectable()
 export class GalleryService {
@@ -18,7 +20,30 @@ export class GalleryService {
     private readonly galleryRepository: Repository<Gallery>,
   ) {}
 
-  async findAll(countryId = 0, userId = 0): Promise<GalleryListDto[]> {
+  async paginate(
+    countryId = 0,
+    userId = 0,
+    options: PaginationOptionsInterface,
+  ): Promise<Pagination<GalleryListDto>> {
+    const [results, total] = await this.galleryRepository.findAndCount({
+      relations: ['country', 'photos', 'user'],
+      where: this.prepareConditions(countryId, userId),
+      order: { created: 'DESC' },
+      take: options.limit,
+      skip: (options.page - 1) * options.limit,
+    });
+
+    const galleryListDtos = results.map((gallery) =>
+      mapToGalleryListDto(gallery),
+    );
+
+    return new Pagination<GalleryListDto>({
+      results: galleryListDtos,
+      total,
+    });
+  }
+
+  private prepareConditions(countryId = 0, userId = 0): Record<string, any> {
     let whereConditions = {};
 
     if (countryId) {
@@ -28,13 +53,7 @@ export class GalleryService {
       whereConditions = { ...whereConditions, user: { id: userId } };
     }
 
-    return (
-      await this.galleryRepository.find({
-        relations: ['country', 'photos', 'user'],
-        where: whereConditions,
-        order: { created: 'DESC' },
-      })
-    ).map((gallery) => mapToGalleryListDto(gallery));
+    return whereConditions;
   }
 
   async findOneById(id: number): Promise<Gallery> {

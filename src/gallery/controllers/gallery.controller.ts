@@ -52,15 +52,22 @@ export class GalleryController {
 
   @Get()
   @Render('galleries')
-  async getGalleries(@Query('countryId') countryId: number) {
-    return { galleries: await this.galleryService.findAll(countryId) };
+  async getGalleries(@Request() request) {
+    const countryId = request.query.countrId || 0;
+    return await this.galleryService.paginate(countryId, 0, {
+      limit: this.configService.get('GALLERIES_ON_PAGE'),
+      page: request.query.hasOwnProperty('page') ? request.query.page : 0,
+    });
   }
 
   @Get('my')
   @UseGuards(AuthenticatedGuard)
   @Render('my-galleries')
   async myGalleries(@Req() request) {
-    return { galleries: await this.galleryService.findAll(0, request.user.id) };
+    return await this.galleryService.paginate(0, request.user.id, {
+      limit: this.configService.get('MY_GALLERIES_ON_PAGE'),
+      page: request.query.hasOwnProperty('page') ? request.query.page : 0,
+    });
   }
 
   @Get('/:slug')
@@ -74,7 +81,7 @@ export class GalleryController {
       gallery: mapToGalleryDto(gallery),
       userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
-      domain: process.env.DOMAIN,
+      domain: this.configService.get('DOMAIN'),
     };
   }
 
