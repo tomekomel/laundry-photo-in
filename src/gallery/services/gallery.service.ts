@@ -50,13 +50,13 @@ export class GalleryService {
       .leftJoinAndSelect('gallery.user', 'user')
       .leftJoinAndSelect('gallery.country', 'country')
       .leftJoinAndSelect('gallery.comments', 'comments')
-      .leftJoinAndSelect('comments.user', 'commentingUsers');
+      .leftJoinAndSelect('comments.user', 'commentingUsers')
+      .where('gallery.slug = :slug', { slug });
 
     if (userId) {
       query
         .leftJoinAndSelect('photo.favorites', 'favorite')
         .leftJoinAndSelect('favorite.user', 'favoriteOwner')
-        .where('gallery.slug = :slug', { slug })
         .andWhere(
           new Brackets((qb) => {
             qb.where('favoriteOwner.id = :userId', { userId }).orWhere(
