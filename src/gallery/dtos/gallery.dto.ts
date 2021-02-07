@@ -22,6 +22,7 @@ export class GalleryDto {
 
   @IsOptional()
   photos?: {
+    id: number;
     fileName: string;
     alt: string;
     title: string;

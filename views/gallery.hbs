@@ -17,11 +17,14 @@
 </div>
 <div id="gallery" class="gallery">
     {{#each gallery.photos}}
-        <img src="../uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
+        <img src="{{ ../domain }}/uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
         <p>
             {{ this.title }}
             {{#if ../userId }}
-                | Add to favorites: <i class="icon icon-bookmark icon-selected"></i>
+                | Add to favorites:
+                <i id="favorite-{{ this.id }}" class="icon icon-bookmark icon-selected"
+                   v-on:click="addToFavorites({{ this.id }})"
+                ></i>
             {{/if}}
         </p>
     {{/each}}
@@ -74,18 +77,32 @@
     src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
 defer
 ></script>
-<script src="../../../scripts/view-gallery-map.js"></script>
+<script src="{{ domain }}/scripts/view-gallery-map.js"></script>
 <script type="text/javascript">
     function initMap() {
         const galleryMap = new ViewGalleryMap({{ gallery.latitude }}, {{ gallery.longitude }});
         galleryMap.display();
     }
 </script>
+
+{{#if userId }}
 <script>
     var app = new Vue({
-        el: '#gallery',
+        el: "#gallery",
         data: {
-            message: 'Hello Vue!'
-        }
-    })
+            message: "Favorites management",
+        },
+        methods: {
+            addToFavorites(photoId) {
+                axios
+                    .post('{{ domain }}/favorites', {
+                        'photoId': photoId,
+                        'userId': {{ userId }}
+                    })
+                    .then((response) => console.log(response))
+                    .catch(err => console.log('Error: ', err));
+            },
+        },
+    });
 </script>
+{{/if}}

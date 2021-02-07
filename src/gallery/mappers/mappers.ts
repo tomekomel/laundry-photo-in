@@ -52,6 +52,7 @@ export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
     galleryDto = {
       ...galleryDto,
       photos: gallery.photos.map(photo => ({
+        id: photo.id,
         fileName: photo.fileName,
         alt: photo.alt,
         title: photo.title,

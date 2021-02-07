@@ -74,6 +74,7 @@ export class GalleryController {
       gallery: mapToGalleryDto(gallery),
       userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
+      domain: process.env.DOMAIN,
     };
   }
 
