@@ -76,16 +76,20 @@ export class GalleryService {
       .leftJoinAndSelect('gallery.country', 'country')
       .leftJoinAndSelect('gallery.comments', 'comments')
       .leftJoinAndSelect('comments.user', 'commentingUsers')
-      .where('gallery.slug = :slug', { slug })
-      .leftJoinAndSelect('photo.favorites', 'favorite')
-      .leftJoinAndSelect('favorite.user', 'favoriteOwner')
-      .andWhere(
-        new Brackets((qb) => {
-          qb.where('favoriteOwner.id = :userId', { userId }).orWhere(
-            'favoriteOwner.id IS NULL',
-          );
-        }),
-      );
+      .where('gallery.slug = :slug', { slug });
+
+    if (userId) {
+      query
+        .leftJoinAndSelect('photo.favorites', 'favorite')
+        .leftJoinAndSelect('favorite.user', 'favoriteOwner')
+        .andWhere(
+          new Brackets((qb) => {
+            qb.where('favoriteOwner.id = :userId', { userId }).orWhere(
+              'favoriteOwner.id IS NULL',
+            );
+          }),
+        );
+    }
 
     return query.getOne();
   }

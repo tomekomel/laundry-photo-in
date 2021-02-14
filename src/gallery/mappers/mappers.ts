@@ -59,9 +59,9 @@ export const mapToGalleryDto = (
         fileName: photo.fileName,
         alt: photo.alt,
         title: photo.title,
-        isFavorite: photo.favorites.some(
+        isFavorite: (photo.favorites) ? photo.favorites.some(
           (favorite) => favorite.user.id === userId,
-        ),
+        ) : false,
       })),
     };
   }

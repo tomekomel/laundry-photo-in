@@ -29,7 +29,7 @@ export class Photo {
   @Column()
   alt: string;
 
-  @ManyToOne(() => Gallery, (gallery) => gallery.photos)
+  @ManyToOne(() => Gallery, (gallery) => gallery.photos, { nullable: false })
   gallery: Gallery;
 
   @OneToMany(() => Favorite, (favorite) => favorite.photo, { nullable: true })
