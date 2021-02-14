@@ -8,7 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CommentModule } from './comment/comment.module';
 import { FavoriteModule } from './favorite/favorite.module';
-import { MailModule } from './mail/mail.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     CommentModule,
     FavoriteModule,
-    MailModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

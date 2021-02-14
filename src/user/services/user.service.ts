@@ -10,11 +10,13 @@ import { UserNameAlreadyExistsException } from '../exceptions/user-name-already-
 import { SaveUserDto } from '../dtos/save-user.dto';
 import { EmailsMismatchException } from '../exceptions/emails-mismatch.exception'
 import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
+import { EmailService } from '../../email/services/email.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly emailService: EmailService,
   ) {}
 
   findAll(): Promise<User[]> {
@@ -43,6 +45,8 @@ export class UserService {
     user.email = email;
     user.password = password;
     await this.userRepository.save(user);
+
+    this.emailService.sendRegistrationEmail(user);
   }
 
   private validateCreateUserDto(userDto: CreateUserDto) {
