@@ -37,7 +37,10 @@ export const mapToGalleryListDto = (gallery: Gallery): GalleryListDto => {
   return galleryListDto;
 };
 
-export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
+export const mapToGalleryDto = (
+  gallery: Gallery,
+  userId: number,
+): GalleryDto => {
   let galleryDto: GalleryDto = {
     id: gallery.id,
     title: gallery.title,
@@ -51,11 +54,14 @@ export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
   if (gallery.photos.length) {
     galleryDto = {
       ...galleryDto,
-      photos: gallery.photos.map(photo => ({
+      photos: gallery.photos.map((photo) => ({
         id: photo.id,
         fileName: photo.fileName,
         alt: photo.alt,
         title: photo.title,
+        isFavorite: photo.favorites.some(
+          (favorite) => favorite.user.id === userId,
+        ),
       })),
     };
   }
@@ -63,7 +69,7 @@ export const mapToGalleryDto = (gallery: Gallery): GalleryDto => {
   if (gallery.comments.length) {
     galleryDto = {
       ...galleryDto,
-      comments: gallery.comments.map(comment => ({
+      comments: gallery.comments.map((comment) => ({
         content: comment.content,
         created: dayjs().to(dayjs(comment.created)),
         userName: comment.user.name,
@@ -87,4 +93,4 @@ export const mapToPhoto = (photoDto: PhotoDto): Photo => {
   photo.title = photoDto.title;
   photo.description = photoDto.description;
   return photo;
-}
+};

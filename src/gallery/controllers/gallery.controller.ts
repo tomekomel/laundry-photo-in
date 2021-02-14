@@ -78,7 +78,7 @@ export class GalleryController {
     await this.galleryService.incrementHits(gallery, userId);
 
     return {
-      gallery: mapToGalleryDto(gallery),
+      gallery: mapToGalleryDto(gallery, userId),
       userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
       domain: this.configService.get('DOMAIN'),

@@ -17,13 +17,13 @@
         User: {{ gallery.userName }} | Added: {{ gallery.created }}</small>
 </div>
 <div id="gallery" class="gallery">
-    {{#each gallery.photos}}
+    {{#each gallery.photos }}
         <img src="{{ ../domain }}/uploads/1200x1200/{{ this.fileName }}" alt="{{ this.alt }}" width="1200" />
         <p>
             {{ this.title }}
             {{#if ../userId }}
                 | Add to favorites:
-                <i id="favorite-{{ this.id }}" class="icon icon-bookmark icon-selected"
+                <i id="favorite-{{ this.id }}" class="icon icon-bookmark {{#if this.isFavorite }}icon-selected{{/if}}"
                    v-on:click="addToFavorites({{ this.id }})"
                 ></i>
             {{/if}}
