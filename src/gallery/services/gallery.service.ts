@@ -12,6 +12,7 @@ import { EditGalleryDto } from '../dtos/edit-gallery.dto';
 import { mapToGalleryListDto, mapToPhoto } from '../mappers/mappers';
 import { PaginationOptionsInterface } from '../../common/paginate/pagination.options.interface';
 import { Pagination } from '../../common/paginate/pagination';
+import { PaginationResultInterface } from '../../common/paginate/pagination.results.interface';
 
 @Injectable()
 export class GalleryService {
@@ -37,10 +38,15 @@ export class GalleryService {
       mapToGalleryListDto(gallery),
     );
 
-    return new Pagination<GalleryListDto>({
+    const paginationParameters: PaginationResultInterface<GalleryListDto> = {
       results: galleryListDtos,
       total,
-    });
+      next:
+        options.page * options.limit < total ? +options.page + 1 : undefined,
+      previous: options.page > 1 ? options.page - 1 : undefined,
+    };
+
+    return new Pagination<GalleryListDto>(paginationParameters);
   }
 
   private prepareConditions(countryId = 0, userId = 0): Record<string, any> {

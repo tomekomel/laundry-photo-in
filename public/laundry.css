@@ -101,3 +101,7 @@ p {
 .gallery .icon-bookmark:hover {
   cursor: pointer;
 }
+
+.pagination {
+  margin-bottom: 50px;
+}

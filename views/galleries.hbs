@@ -15,3 +15,20 @@
         </div>
     </div>
 {{/each}}
+
+<ul class="pagination">
+{{#if previous}}
+    <li class="page-item page-prev">
+        <a href="?page={{ previous }}">
+            <div class="page-item-title h5">Previous</div>
+        </a>
+    </li>
+{{/if}}
+{{#if next}}
+    <li class="page-item page-next">
+        <a href="?page={{ next }}">
+            <div class="page-item-title h5">Next</div>
+        </a>
+    </li>
+{{/if}}
+</ul>
