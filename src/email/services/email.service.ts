@@ -9,12 +9,13 @@ export class EmailService {
   sendRegistrationEmail(user: User) {
     this.mailerService
       .sendMail({
-        to: 'tomekomel@gmail.com',
-        subject: 'Activation email from dryinglaundry.com ✔',
+        to: user.email,
+        subject: 'Activation email from dryinglaundry.art ✔',
         context: {
-          code: 'cf1a3f828287',
-          username: 'john doe',
+          activationLink: `${process.env.DOMAIN}/users/${user.id}/activate`,
+          userName: user.name,
         },
+        template: 'register',
       })
       .then((success) => {
         Logger.log(`Email was sent successfully to user ${user.email}`);

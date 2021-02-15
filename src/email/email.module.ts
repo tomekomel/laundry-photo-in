@@ -21,7 +21,14 @@ import { EmailService } from './services/email.service';
         },
         defaults: {
           from: process.env.FROM_EMAIL,
-        }
+        },
+        template: {
+          dir: join(__dirname, '..', '..', 'views', 'emails'),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
       }),
     }),
   ],
