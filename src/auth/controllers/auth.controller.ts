@@ -2,15 +2,19 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
+  Param,
+  ParseUUIDPipe,
   Post,
   Render,
+  Req,
   Request,
   Res,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { LoginGuard } from '../guards/login.guard';
-import { Response } from 'express';
+import { Request as RequestObject, Response } from 'express';
 import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 import { CreateUserDto } from '../../user/dtos/create-user.dto';
 import { UserService } from '../../user/services/user.service';
@@ -29,6 +33,23 @@ export class AuthController {
       message: req.flash('loginError'),
       userId: req.user ? req.user.id : 0,
     };
+  }
+
+  @Get('/:uuid/activate')
+  async activate(
+    @Param('uuid', ParseUUIDPipe) uuid: string,
+    @Res() response: Response,
+    @Req() request: RequestObject,
+  ) {
+    try {
+      await this.userService.activate(uuid);
+      request.flash('info', 'Your account has been activated successfully');
+    } catch (e) {
+      request.flash('error', 'Activation error');
+      Logger.error('Activation error', e);
+    }
+
+    response.redirect(`/auth/login`);
   }
 
   @UseGuards(LoginGuard)

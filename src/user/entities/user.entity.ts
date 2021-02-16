@@ -54,7 +54,7 @@ export class User {
   }
 
   activate() {
-    this.uuid = null;
+    this.uuid = '';
     this.active = true;
   }
 

@@ -8,7 +8,7 @@ import { PasswordsMismatchException } from '../exceptions/passwords-mismatch.exc
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 import { UserNameAlreadyExistsException } from '../exceptions/user-name-already-exists.exception';
 import { SaveUserDto } from '../dtos/save-user.dto';
-import { EmailsMismatchException } from '../exceptions/emails-mismatch.exception'
+import { EmailsMismatchException } from '../exceptions/emails-mismatch.exception';
 import { PasswordMismatchException } from '../exceptions/password-mismatch.exception';
 import { EmailService } from '../../email/services/email.service';
 
@@ -25,6 +25,10 @@ export class UserService {
 
   findOne(id: number): Promise<User> {
     return this.userRepository.findOne(id);
+  }
+
+  findOneActiveByName(name: string): Promise<User> {
+    return this.userRepository.findOne({ name, active: true });
   }
 
   findOneByName(name: string): Promise<User> {
@@ -59,6 +63,12 @@ export class UserService {
     if (password !== password2) {
       throw new PasswordsMismatchException();
     }
+  }
+
+  async activate(uuid: string) {
+    const user = await this.userRepository.findOne({ uuid });
+    user.activate();
+    await this.userRepository.save(user);
   }
 
   async save(saveUserDto: SaveUserDto) {
