@@ -12,7 +12,7 @@ export class EmailService {
         to: user.email,
         subject: 'Activation email from dryinglaundry.art ✔',
         context: {
-          activationLink: `${process.env.DOMAIN}/users/${user.id}/activate`,
+          activationLink: `${process.env.DOMAIN}/auth/${user.uuid}/activate`,
           userName: user.name,
         },
         template: 'register',

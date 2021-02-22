@@ -36,6 +36,7 @@ export class AuthController {
   }
 
   @Get('/:uuid/activate')
+  @Render('activated')
   async activate(
     @Param('uuid', ParseUUIDPipe) uuid: string,
     @Res() response: Response,
@@ -43,13 +44,12 @@ export class AuthController {
   ) {
     try {
       await this.userService.activate(uuid);
-      request.flash('info', 'Your account has been activated successfully');
     } catch (e) {
-      request.flash('error', 'Activation error');
       Logger.error('Activation error', e);
+      return {
+        error: 'Your account has not been activated.'
+      }
     }
-
-    response.redirect(`/auth/login`);
   }
 
   @UseGuards(LoginGuard)
