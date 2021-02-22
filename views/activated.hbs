@@ -1,0 +1,10 @@
+{{#if error}}
+    <h1>Activation error</h1>
+    <div class="toast toast-primary">
+        <p>You account has not been activated :(</p>
+    </div>
+{{else}}
+    <h1>Your account has been activated successfully</h1>
+    <br />
+    <p>Please login <a href="/auth/login">here</a>.</p>
+{{/if}}
