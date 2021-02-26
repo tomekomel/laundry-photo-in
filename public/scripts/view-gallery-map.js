@@ -15,21 +15,23 @@ class ViewGalleryMap {
       fullscreenControl: false,
     };
 
-    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+    this.map = new google.maps.Map(
+      document.getElementById('map'),
+      this.mapOptions,
+    );
   }
 
   display() {
-    this.createMarker(this.map);
+    this.createMarker(this.map, this.position);
   }
 
-  createMarker(map) {
+  createMarker(map, position) {
     const marker = new google.maps.Marker({
-      position: this.position,
+      position: position,
       map,
       icon: this.markerIcon,
     });
 
-    map.addListener('click', (mapsMouseEvent) => {
-    });
+    map.addListener('click', (mapsMouseEvent) => {});
   }
 }

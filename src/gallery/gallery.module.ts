@@ -10,6 +10,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { Photo } from './entities/photo.entity';
 import { PhotoService } from './services/photo.service';
 import { ThumbnailGenerator } from './services/thumbnail.generator';
+import { GalleryApiController } from './controllers/gallery-api.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ThumbnailGenerator } from './services/thumbnail.generator';
       dest: './uploads',
     }),
   ],
-  controllers: [GalleryController, PhotoController],
+  controllers: [GalleryController, PhotoController, GalleryApiController],
   providers: [GalleryService, CountryService, PhotoService, ThumbnailGenerator],
 })
 export class GalleryModule {}
