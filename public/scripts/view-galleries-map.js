@@ -46,6 +46,18 @@ class ViewGalleriesMap {
         }
       })
       .filter(Boolean);
+
+    galleriesWithMarkers.map((gallery) => {
+      const infoWindow = new google.maps.InfoWindow({
+        content: `<h5>${gallery.title}</h5>
+            <img src="../uploads/100x100/${gallery.photo}" alt="${gallery.title}" />
+        `,
+      });
+      gallery.marker.addListener('click', () => {
+        infoWindow.open(map, gallery.marker);
+      });
+    });
+
     return galleriesWithMarkers;
   }
 
