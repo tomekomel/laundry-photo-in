@@ -1,0 +1,31 @@
+<h1>Galleries Map</h1>
+
+<div class="galleries">
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/galleries">Galleries</a>
+        </li>
+        <li class="breadcrumb-item">
+            Map
+        </li>
+    </ul>
+
+    <div id="map"></div>
+</div>
+
+<script
+        src="https://maps.googleapis.com/maps/api/js?key={{ mapsApiKey }}&callback=initMap&libraries=&v=weekly"
+defer
+></script>
+<script src="{{ domain }}/scripts/view-galleries-map.js"></script>
+<script type="text/javascript">
+    function initMap() {
+        const galleriesMap = new ViewGalleriesMap(
+            {{{ galleries }}}
+        );
+        galleriesMap.display();
+    }
+</script>

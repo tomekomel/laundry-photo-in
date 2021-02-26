@@ -5,7 +5,6 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Query,
   Render,
   Req,
   Request,
@@ -68,6 +67,25 @@ export class GalleryController {
       limit: this.configService.get('MY_GALLERIES_ON_PAGE'),
       page: request.query.hasOwnProperty('page') ? request.query.page : 1,
     });
+  }
+
+  @Get('/map')
+  @Render('galleries-map')
+  async getGalleriesMap(@Request() request) {
+    const countryId = request.query.countrId || 0;
+
+    return {
+      galleries: JSON.stringify(
+        (
+          await this.galleryService.paginate(countryId, 0, {
+            limit: 300,
+            page: 1,
+          })
+        ).results,
+      ),
+      mapsApiKey: this.configService.get('MAPS_API_KEY'),
+      domain: this.configService.get('DOMAIN'),
+    };
   }
 
   @Get('/:slug')

@@ -86,6 +86,11 @@ p {
   height: 400px;
 }
 
+.galleries #map {
+  max-width: 1200px;
+  height: 800px;
+}
+
 .icon-selected {}
 .icon-selected::before {
   background-color: mediumvioletred;
