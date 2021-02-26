@@ -23,22 +23,39 @@ class ViewGalleriesMap {
   }
 
   display() {
-    this.createMarkers(this.map, this.galleries, this.markerIcon);
+    const galleriesWithMarkers = this.createMarkers(
+      this.map,
+      this.galleries,
+      this.markerIcon,
+    );
+    this.adjustMapToGalleriesMarkers(this.map, galleriesWithMarkers);
   }
 
   createMarkers(map, galleries, markerIcon) {
-    const galleriesWithMarkers = galleries.map(gallery => {
-      if (gallery.latitude && gallery.longitude) {
-        return {
-          ...gallery,
-          marker: new google.maps.Marker({
-            position: { lat: gallery.latitude, lng: gallery.longitude },
-            map,
-            icon: markerIcon,
-          })
+    const galleriesWithMarkers = galleries
+      .map((gallery) => {
+        if (gallery.latitude && gallery.longitude) {
+          return {
+            ...gallery,
+            marker: new google.maps.Marker({
+              position: { lat: gallery.latitude, lng: gallery.longitude },
+              map,
+              icon: markerIcon,
+            }),
+          };
         }
-      }
-    }).filter(Boolean);
-    console.log(galleriesWithMarkers);
+      })
+      .filter(Boolean);
+    return galleriesWithMarkers;
+  }
+
+  adjustMapToGalleriesMarkers(map, galleries) {
+    const bounds = new google.maps.LatLngBounds();
+    galleries.map((gallery) => {
+      bounds.extend(
+        new google.maps.LatLng(gallery.latitude, gallery.longitude),
+      );
+    });
+    map.fitBounds(bounds);
   }
 }
