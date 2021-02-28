@@ -11,6 +11,7 @@ import { Photo } from './entities/photo.entity';
 import { PhotoService } from './services/photo.service';
 import { ThumbnailGenerator } from './services/thumbnail.generator';
 import { GalleryApiController } from './controllers/gallery-api.controller';
+import { CanEditGalleryGuard } from './guards/can-edit-gallery.guard';
 
 @Module({
   imports: [
@@ -20,6 +21,12 @@ import { GalleryApiController } from './controllers/gallery-api.controller';
     }),
   ],
   controllers: [GalleryController, PhotoController, GalleryApiController],
-  providers: [GalleryService, CountryService, PhotoService, ThumbnailGenerator],
+  providers: [
+    GalleryService,
+    CountryService,
+    PhotoService,
+    ThumbnailGenerator,
+    CanEditGalleryGuard,
+  ],
 })
 export class GalleryModule {}

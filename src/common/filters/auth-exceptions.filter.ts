@@ -15,11 +15,14 @@ export class AuthExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const request = context.getRequest<Request>();
 
-    if (
-      exception instanceof UnauthorizedException ||
-      exception instanceof ForbiddenException
-    ) {
-      request.flash('loginError', 'Please try again!');
+    if (exception instanceof UnauthorizedException) {
+      request.flash('info', 'Please try again!');
+      response.redirect('/auth/login');
+    } else if (exception instanceof ForbiddenException) {
+      request.flash(
+        'info',
+        'You are not authorized to edit this resource!',
+      );
       response.redirect('/auth/login');
     } else {
       response.redirect('/error');

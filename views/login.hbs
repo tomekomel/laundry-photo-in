@@ -3,16 +3,16 @@
         <div class="column col-3">
             <h1>DryingLaundry.Art</h1>
             <br />
+            {{#if message}}
+                <div class="toast toast-primary">
+                    <button class="btn btn-clear float-right"></button>
+                    <p>{{ message }}</p>
+                </div>
+            {{/if}}
             <br />
             {{#if userId}}
                 <h3>You are logged in.</h3>
             {{else}}
-                {{#if message}}
-                    <div class="toast toast-primary">
-                        <button class="btn btn-clear float-right"></button>
-                        <p>{{ message }}</p>
-                    </div>
-                {{/if}}
                 <br />
                 <form action="login" method="post">
                     <div class="form-group">

@@ -27,11 +27,11 @@ export class AuthController {
   @Get('login')
   @Render('login')
   async loginView(
-    @Request() req,
+    @Req() request,
   ): Promise<{ message: string; userId: string }> {
     return {
-      message: req.flash('loginError'),
-      userId: req.user ? req.user.id : 0,
+      message: request.flash('info'),
+      userId: request.user ? request.user.id : 0,
     };
   }
 
@@ -68,7 +68,7 @@ export class AuthController {
   @Render('register')
   async registerView(@Request() req) {
     return {
-      message: req.flash('loginError'),
+      message: req.flash('info'),
       userId: req.user ? req.user.id : 0,
     };
   }

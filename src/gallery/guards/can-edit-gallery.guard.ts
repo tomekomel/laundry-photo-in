@@ -7,10 +7,14 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Gallery } from '../entities/gallery.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CanEditGalleryGuard implements CanActivate {
-  constructor(private readonly galleryRepository: Repository<Gallery>) {}
+  constructor(
+    @InjectRepository(Gallery)
+    private readonly galleryRepository: Repository<Gallery>,
+  ) {}
 
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();

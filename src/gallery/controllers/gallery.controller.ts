@@ -21,6 +21,7 @@ import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
 import { mapToGalleryDto } from '../mappers/mappers';
+import { CanEditGalleryGuard } from '../guards/can-edit-gallery.guard';
 
 @UseFilters(AuthExceptionFilter)
 @Controller('galleries')
@@ -105,6 +106,7 @@ export class GalleryController {
 
   @Get('/:id/edit')
   @UseGuards(AuthenticatedGuard)
+  @UseGuards(CanEditGalleryGuard)
   @Render('edit-gallery')
   async editGallery(@Param('id', ParseIntPipe) id: number) {
     return {
