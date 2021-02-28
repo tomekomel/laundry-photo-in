@@ -97,6 +97,8 @@ export class GalleryController {
   ) {
     const userId = request.user ? request.user.id : 0;
     const gallery = await this.galleryService.findOneBySlug(slug, userId);
+    const domain = this.configService.get('DOMAIN');
+
     await this.galleryService.incrementHits(gallery, userId);
     const galleryDto = mapToGalleryDto(gallery, userId);
 
@@ -104,9 +106,11 @@ export class GalleryController {
       gallery: galleryDto,
       userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
-      domain: this.configService.get('DOMAIN'),
+      domain,
       layout: 'main-with-og-tags',
       title: galleryDto.title + ' | ' + this.configService.get('APP_NAME'),
+      galleryUrl: `${domain}/galleries/${slug}`,
+      firstPhotoName: galleryDto.photos[0].fileName,
     });
   }
 
