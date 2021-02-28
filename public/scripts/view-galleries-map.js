@@ -48,10 +48,15 @@ class ViewGalleriesMap {
       .filter(Boolean);
 
     galleriesWithMarkers.map((gallery) => {
+      let content = `<h5>${gallery.title}</h5>`;
+      if (gallery.photo) {
+        content = `${content}
+            <img src="../uploads/300x300/${gallery.photo}"
+                alt="${gallery.title}"
+                width="250" />`;
+      }
       const infoWindow = new google.maps.InfoWindow({
-        content: `<h5>${gallery.title}</h5>
-            <img src="../uploads/100x100/${gallery.photo}" alt="${gallery.title}" />
-        `,
+        content,
       });
       gallery.marker.addListener('click', () => {
         infoWindow.open(map, gallery.marker);
