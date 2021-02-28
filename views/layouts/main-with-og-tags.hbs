@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ galleryUrl }}" />
+    <meta property="og:image" content="{{ galleryImage }}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/spectre.css">
+    <link rel="stylesheet" href="/spectre-exp.css">
+    <link rel="stylesheet" href="/spectre-icons.css">
+    <link rel="stylesheet" href="/laundry.css">
+</head>
+<body>
+<div class="container">
+    <div class="columns">
+        <div class="column col-2 bg-dark">
+            {{> sidebar }}
+        </div>
+
+        <div class="column col-10">
+            <div class="main">
+                {{{ body }}}
+            </div>
+        </div>
+    </div>
+</div>
+</body>

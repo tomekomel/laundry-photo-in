@@ -90,18 +90,24 @@ export class GalleryController {
   }
 
   @Get('/:slug')
-  @Render('gallery')
-  async getGallery(@Param('slug') slug: string, @Request() request) {
+  async getGallery(
+    @Param('slug') slug: string,
+    @Request() request,
+    @Res() response: Response,
+  ) {
     const userId = request.user ? request.user.id : 0;
     const gallery = await this.galleryService.findOneBySlug(slug, userId);
     await this.galleryService.incrementHits(gallery, userId);
+    const galleryDto = mapToGalleryDto(gallery, userId);
 
-    return {
-      gallery: mapToGalleryDto(gallery, userId),
+    response.render('gallery', {
+      gallery: galleryDto,
       userId,
       mapsApiKey: this.configService.get('MAPS_API_KEY'),
       domain: this.configService.get('DOMAIN'),
-    };
+      layout: 'main-with-og-tags',
+      title: galleryDto.title + ' | ' + this.configService.get('APP_NAME'),
+    });
   }
 
   @Get('/:id/edit')
