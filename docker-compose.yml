@@ -3,8 +3,25 @@ version: "3.7"
 networks:
   nodemysql:
     driver: bridge
+    name: nodemysql
 
 services:
+  db:
+    image: mysql:5.7
+    container_name: ${DB_HOST}
+    volumes:
+      - dbdata:/var/lib/mysql
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    restart: on-failure
+    environment:
+      MYSQL_TCP_PORT: ${DB_PORT}
+      MYSQL_ROOT_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    networks:
+      - nodemysql
+
   backend_service:
     depends_on:
       - db
@@ -18,20 +35,6 @@ services:
     env_file: .env
     networks:
       - nodemysql
-
-  db:
-    image: mysql:5.7
-    volumes:
-      - dbdata:/var/lib/mysql
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
-    restart: always
-    env_file: ./.env
-    environment:
-      MYSQL_TCP_PORT: ${DB_PORT}
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
 
   admin:
     image: phpmyadmin/phpmyadmin:latest
@@ -50,3 +53,4 @@ services:
 
 volumes:
   dbdata:
+
