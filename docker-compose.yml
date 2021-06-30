@@ -1,30 +1,26 @@
 version: "3.7"
 
 networks:
-  nodemysql:
+  postgres_network:
     driver: bridge
-    name: nodemysql
+    name: postgres_network
 
 services:
-  db:
-    image: mysql:5.7
-    container_name: ${DB_HOST}
-    volumes:
-      - dbdata:/var/lib/mysql
+  postgres:
+    image: postgres:13.1
     ports:
-      - "${DB_PORT}:${DB_PORT}"
+      - "5432:5432"
+    env_file:
+      - postgres/.env
     restart: on-failure
-    environment:
-      MYSQL_TCP_PORT: ${DB_PORT}
-      MYSQL_ROOT_USER: ${DB_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - dbdata:/var/lib/postgresql
     networks:
-      - nodemysql
+      - postgres_network
 
   backend_service:
     depends_on:
-      - db
+      - postgres
     restart: always
     build: .
     ports:
@@ -34,23 +30,25 @@ services:
     - /data/app/node_modules
     env_file: .env
     networks:
-      - nodemysql
+      - postgres_network
 
-  admin:
-    image: phpmyadmin/phpmyadmin:latest
-    links:
-      - db:${DB_HOST}
-    depends_on:
-      - db
-    ports:
-      - "9999:80"
+  pg-admin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      PMA_HOST: ${DB_HOST}
-      PMA_PORT: ${DB_PORT}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pg-admin:/root/.pg-admin
+    ports:
+      - "${PGADMIN_PORT:-9999}:80"
     networks:
-      - nodemysql
+      - postgres_network
+    links:
+      - postgres:pgsql-server
+    restart: unless-stopped
 
 volumes:
   dbdata:
-
+  pg-admin:
