@@ -8,10 +8,13 @@ networks:
 services:
   postgres:
     image: postgres:13.1
+    container_name: ${DB_HOST}
     ports:
       - "5432:5432"
-    env_file:
-      - postgres/.env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     restart: on-failure
     volumes:
       - dbdata:/var/lib/postgresql
