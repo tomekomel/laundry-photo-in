@@ -22,8 +22,10 @@ import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
 import { EditGalleryDto } from '../dtos/edit-gallery.dto';
 import { mapToGalleryDto } from '../mappers/mappers';
 import { CanEditGalleryGuard } from '../guards/can-edit-gallery.guard';
+import { HttpExceptionFilter } from '../../common/filters/http-exceptions.filter';
 
 @UseFilters(AuthExceptionFilter)
+@UseFilters(HttpExceptionFilter)
 @Controller('galleries')
 export class GalleryController {
   constructor(
@@ -32,8 +34,8 @@ export class GalleryController {
     private readonly configService: ConfigService,
   ) {}
 
+  @Post('/')
   @UseGuards(AuthenticatedGuard)
-  @Post()
   async saveGallery(@Req() request: RequestObject, @Res() response: Response) {
     const gallery = await this.galleryService.create(request.body);
     response.redirect(`/photos/add?galleryId=${gallery.id}`);
@@ -126,7 +128,6 @@ export class GalleryController {
     };
   }
 
-  @UseGuards(AuthenticatedGuard)
   @Post('/:id')
   async saveGalleryWithPhotos(
     @Param('id', ParseIntPipe) id: number,
