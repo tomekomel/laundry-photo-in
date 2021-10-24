@@ -129,6 +129,8 @@ export class GalleryController {
   }
 
   @Post('/:id')
+  @UseGuards(AuthenticatedGuard)
+  @UseGuards(CanEditGalleryGuard)
   async saveGalleryWithPhotos(
     @Param('id', ParseIntPipe) id: number,
     @Body() editGalleryDto: EditGalleryDto,

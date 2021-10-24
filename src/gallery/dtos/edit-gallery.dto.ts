@@ -10,7 +10,6 @@ export class EditGalleryDto {
   @IsString()
   country: string;
 
-  @IsNotEmpty()
   @IsString()
   description: string;
 
