@@ -49,7 +49,7 @@ export class PhotoController {
   ) {
     this.thumbnailGenerator.generateThumbnails(photos);
     await this.photoService.saveUploadedPhotos(photos, galleryId);
-    response.redirect('/galleries');
+    response.redirect(`/galleries/${galleryId}/edit`);
   }
 
   @UseGuards(AuthenticatedGuard)
