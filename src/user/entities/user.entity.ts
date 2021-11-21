@@ -33,6 +33,12 @@ export class User {
   @DeleteDateColumn()
   deleted: Date;
 
+  @Column()
+  description: string;
+
+  @Column()
+  notes: string;
+
   @Column({ length: 36 })
   uuid?: string;
 
