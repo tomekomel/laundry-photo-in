@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   Render,
   Req,
   Request,
@@ -54,9 +55,11 @@ export class GalleryController {
 
   @Get()
   @Render('galleries')
-  async getGalleries(@Request() request) {
-    const countryId = request.query.countrId || 0;
-    const userId = request.query.userId || 0;
+  async getGalleries(
+    @Request() request,
+    @Query('countryId') countryId = 0,
+    @Query('userId') userId = 0,
+  ) {
     return await this.galleryService.paginate(countryId, userId, {
       limit: this.configService.get('GALLERIES_ON_PAGE'),
       page: request.query.hasOwnProperty('page') ? request.query.page : 1,

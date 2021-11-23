@@ -12,6 +12,10 @@ export class GalleryListDto {
   @IsString()
   country?: string;
 
+  @IsOptional()
+  @IsNumber()
+  countryId?: number;
+
   @IsString()
   slug: string;
 

@@ -32,6 +32,7 @@ export const mapToGalleryListDto = (gallery: Gallery): GalleryListDto => {
     galleryListDto = {
       ...galleryListDto,
       country: gallery.country.name,
+      countryId: gallery.country.id,
     };
   }
 
