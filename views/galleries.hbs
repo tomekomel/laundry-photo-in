@@ -11,7 +11,7 @@
         {{/if}}
         <div class="photo-info">
             <small class="label">Country: {{ this.country }} |
-               User: {{ this.userName }} | Added: {{ this.created }}</small>
+                User: <a href="galleries?userId={{ this.userId }}">{{ this.userName }}</a> | Added: {{ this.created }}</small>
         </div>
     </div>
 {{/each}}

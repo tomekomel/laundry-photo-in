@@ -49,7 +49,10 @@ export class GalleryService {
     return new Pagination<GalleryListDto>(paginationParameters);
   }
 
-  private prepareConditions(countryId = 0, userId = 0): Record<string, any> {
+  private prepareConditions(
+    countryId = 0,
+    userId = 0,
+  ): Record<string, Record<string, number>> {
     let whereConditions = {};
 
     if (countryId) {

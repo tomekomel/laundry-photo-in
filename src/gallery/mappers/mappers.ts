@@ -14,6 +14,7 @@ export const mapToGalleryListDto = (gallery: Gallery): GalleryListDto => {
     title: gallery.title,
     description: gallery.description,
     userName: gallery.user.name,
+    userId: gallery.user.id,
     created: dayjs().to(dayjs(gallery.created)),
     latitude: gallery.latitude,
     longitude: gallery.longitude,

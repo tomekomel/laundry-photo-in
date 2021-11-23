@@ -56,7 +56,8 @@ export class GalleryController {
   @Render('galleries')
   async getGalleries(@Request() request) {
     const countryId = request.query.countrId || 0;
-    return await this.galleryService.paginate(countryId, 0, {
+    const userId = request.query.userId || 0;
+    return await this.galleryService.paginate(countryId, userId, {
       limit: this.configService.get('GALLERIES_ON_PAGE'),
       page: request.query.hasOwnProperty('page') ? request.query.page : 1,
     });

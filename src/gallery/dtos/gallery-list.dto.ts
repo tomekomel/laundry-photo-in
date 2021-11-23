@@ -30,6 +30,9 @@ export class GalleryListDto {
   @IsString()
   userName: string;
 
+  @IsNumber()
+  userId: number;
+
   @IsNotEmpty()
   @IsString()
   description: string;
