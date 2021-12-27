@@ -18,6 +18,7 @@ import { Request as RequestObject, Response } from 'express';
 import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 import { CreateUserDto } from '../../user/dtos/create-user.dto';
 import { UserService } from '../../user/services/user.service';
+import { Recaptcha } from '@nestlab/google-recaptcha';
 
 @UseFilters(AuthExceptionFilter)
 @Controller('auth')

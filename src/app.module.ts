@@ -10,6 +10,8 @@ import { CommentModule } from './comment/comment.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { EmailModule } from './email/email.module';
 import { AppLoggerMiddleware } from './common/middlewares/logger.middleware';
+import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha';
+import { IncomingMessage } from 'http';
 
 @Module({
   imports: [
@@ -25,6 +27,11 @@ import { AppLoggerMiddleware } from './common/middlewares/logger.middleware';
         ssl: true,
       }),
       inject: [ConfigService],
+    }),
+    GoogleRecaptchaModule.forRoot({
+      secretKey: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
+      response: (req: IncomingMessage) => (req.headers.recaptcha || '').toString(),
+      score: 0.8,
     }),
     UserModule,
     AuthModule,
