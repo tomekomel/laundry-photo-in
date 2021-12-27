@@ -28,10 +28,15 @@ import { IncomingMessage } from 'http';
       }),
       inject: [ConfigService],
     }),
-    GoogleRecaptchaModule.forRoot({
-      secretKey: process.env.GOOGLE_RECAPTCHA_SECRET_KEY,
-      response: (req: IncomingMessage) => (req.headers.recaptcha || '').toString(),
-      score: 0.8,
+    GoogleRecaptchaModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        secretKey: configService.get<string>('GOOGLE_RECAPTCHA_SECRET_KEY'),
+        response: (req: IncomingMessage) =>
+          (req.headers.recaptcha || '').toString(),
+        score: 0.8,
+      }),
+      inject: [ConfigService],
     }),
     UserModule,
     AuthModule,

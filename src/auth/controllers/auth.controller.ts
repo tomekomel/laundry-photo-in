@@ -48,8 +48,8 @@ export class AuthController {
     } catch (e) {
       Logger.error('Activation error', e);
       return {
-        error: 'Your account has not been activated.'
-      }
+        error: 'Your account has not been activated.',
+      };
     }
   }
 
@@ -74,6 +74,7 @@ export class AuthController {
     };
   }
 
+  @Recaptcha({ response: (req) => req.body['g-recaptcha-response'] })
   @Post('register')
   async register(
     @Body() createUserDto: CreateUserDto,
