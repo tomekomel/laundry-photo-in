@@ -41,6 +41,4 @@ public/uploads/600x600/*.jpg
 public/uploads/1200x1200/*.jpg
 public/uploads/*.png
 
-.env
-ormconfig.env
 drying-laundry-d4599d47531b.json
