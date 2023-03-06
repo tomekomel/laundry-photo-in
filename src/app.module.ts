@@ -1,7 +1,5 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GalleryModule } from './gallery/gallery.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
@@ -43,9 +41,7 @@ import { IncomingMessage } from 'http';
     CommentModule,
     FavoriteModule,
     EmailModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
