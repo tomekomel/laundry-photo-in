@@ -42,3 +42,6 @@ public/uploads/1200x1200/*.jpg
 public/uploads/*.png
 
 drying-laundry-d4599d47531b.json
+google-credentials.json
+.env
+ormconfig.env
