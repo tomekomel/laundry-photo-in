@@ -121,8 +121,8 @@ export class GalleryController {
   }
 
   @Get('/:id/edit')
-  @UseGuards(AuthenticatedGuard)
-  @UseGuards(CanEditGalleryGuard)
+  //@UseGuards(AuthenticatedGuard)
+  //@UseGuards(CanEditGalleryGuard)
   @Render('edit-gallery')
   async editGallery(@Param('id', ParseIntPipe) id: number) {
     return {

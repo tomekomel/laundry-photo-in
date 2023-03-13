@@ -13,7 +13,9 @@ import * as hbsHelpers from 'handlebars-helpers';
 const multihelpers = hbsHelpers();
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+  });
   const config = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 

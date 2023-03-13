@@ -37,7 +37,7 @@ export class PhotoController {
   ) {}
 
   @Post()
-  @UseInterceptors(
+  /*@UseInterceptors(
     FilesInterceptor('file', null, {
       storage: new MulterGoogleStorage({
         projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
@@ -46,7 +46,7 @@ export class PhotoController {
         filename: photoFileName,
       }),
     }),
-  )
+  )*/
   @UseInterceptors(
     FilesInterceptor('photos', 10, {
       storage: diskStorage({
@@ -60,7 +60,7 @@ export class PhotoController {
     @Body('galleryId') galleryId: number,
     @Res() response: Response,
   ) {
-    this.thumbnailGenerator.generateThumbnails(photos);
+    await this.thumbnailGenerator.generateThumbnails(photos);
     await this.photoService.saveUploadedPhotos(photos, galleryId);
     response.redirect(`/galleries/${galleryId}/edit`);
   }

@@ -74,7 +74,7 @@ export class AuthController {
     };
   }
 
-  @Recaptcha({ response: (req) => req.body['g-recaptcha-response'] })
+  //@Recaptcha({ response: (req) => req.body['g-recaptcha-response'] })
   @Post('register')
   async register(
     @Body() createUserDto: CreateUserDto,

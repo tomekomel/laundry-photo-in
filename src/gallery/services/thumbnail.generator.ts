@@ -1,9 +1,5 @@
-import { readFile } from 'fs';
-import * as sharp from 'sharp';
-import { promisify } from 'util';
 import { Injectable, Logger } from '@nestjs/common';
-
-const readFileAsync = promisify(readFile);
+import * as jimp from 'jimp';
 
 @Injectable()
 export class ThumbnailGenerator {
@@ -11,23 +7,28 @@ export class ThumbnailGenerator {
   readonly availableExtensions = ['jpg', 'jpeg', 'png'];
   readonly folderPath = `./public/uploads`;
 
-  generateThumbnails(photos: Express.Multer.File[]) {
+  async generateThumbnails(photos: Express.Multer.File[]) {
+    const generateThumbnailsPromises = [];
     this.sizes.forEach((size) => {
-      photos.forEach((photo) => this.generateThumbnail(photo, size));
+      photos.forEach((photo) => {
+        generateThumbnailsPromises.push(this.generateThumbnail(photo, size));
+      });
     });
+
+    await Promise.all(generateThumbnailsPromises);
   }
 
-  generateThumbnail(photo: Express.Multer.File, size: string) {
+  async generateThumbnail(photo: Express.Multer.File, size: string) {
     const [singleSize] = size.split('x');
-    readFileAsync(photo.path)
-      .then((buffer) => {
-        return sharp(buffer)
-          .resize(+singleSize)
-          .jpeg({ quality: 95 })
-          .toFile(`${this.folderPath}/${size}/${photo.filename}`);
-      })
-      .then((result) => Logger.log(result))
-      .catch((error) => Logger.error(error));
+    try {
+      const thumbPath = `${this.folderPath}/${size}/${photo.filename}`;
+      const image = await jimp.read(photo.path);
+      await image.resize(+singleSize, jimp.AUTO);
+      await image.writeAsync(thumbPath);
+      Logger.log('File correctly uploaded: ', thumbPath);
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   private checkExtensionAvailability(photo: Express.Multer.File): boolean {

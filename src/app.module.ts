@@ -25,6 +25,7 @@ import { IncomingMessage } from 'http';
         autoLoadEntities: true,
         synchronize: false,
         ssl: true,
+        logging: true,
       }),
       inject: [ConfigService],
     }),
