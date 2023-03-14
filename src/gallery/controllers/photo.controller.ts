@@ -23,7 +23,7 @@ import { photoFileName } from '../../common/utils/file.utils';
 import { PhotoService } from '../services/photo.service';
 import { ThumbnailGenerator } from '../services/thumbnail.generator';
 
-import MulterGoogleStorage from 'multer-google-storage';
+import MulterGoogleCloudStorage from 'multer-cloud-storage';
 import * as path from 'path';
 
 const uploadFolder = './public/uploads';
@@ -37,17 +37,16 @@ export class PhotoController {
   ) {}
 
   @Post()
-  /*@UseInterceptors(
-    FilesInterceptor('file', null, {
-      storage: new MulterGoogleStorage({
+  @UseInterceptors(
+    FilesInterceptor('photos', 10, {
+      storage: new MulterGoogleCloudStorage({
         projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
-        keyFilename: path.join(__dirname, '../../../google-credentials.json'),
         bucket: process.env.GOOGLE_STORAGE_BUCKET,
+        keyFilename: path.join(__dirname, '../../../google-credentials.json'),
         filename: photoFileName,
+        uniformBucketLevelAccess: true,
       }),
     }),
-  )*/
-  @UseInterceptors(
     FilesInterceptor('photos', 10, {
       storage: diskStorage({
         destination: uploadFolder,
