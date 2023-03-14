@@ -13,7 +13,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import { Response } from 'express';
 
 import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
@@ -26,7 +25,7 @@ import { ThumbnailGenerator } from '../services/thumbnail.generator';
 import MulterGoogleCloudStorage from 'multer-cloud-storage';
 import * as path from 'path';
 
-const uploadFolder = './public/uploads';
+const uploadFolder = './laundry-local/';
 
 @Controller('photos')
 export class PhotoController {
@@ -44,13 +43,8 @@ export class PhotoController {
         bucket: process.env.GOOGLE_STORAGE_BUCKET,
         keyFilename: path.join(__dirname, '../../../google-credentials.json'),
         filename: photoFileName,
-        uniformBucketLevelAccess: true,
-      }),
-    }),
-    FilesInterceptor('photos', 10, {
-      storage: diskStorage({
         destination: uploadFolder,
-        filename: photoFileName,
+        uniformBucketLevelAccess: true,
       }),
     }),
   )
