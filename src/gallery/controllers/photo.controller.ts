@@ -25,15 +25,17 @@ import { ThumbnailGenerator } from '../services/thumbnail.generator';
 import MulterGoogleCloudStorage from 'multer-cloud-storage';
 import * as path from 'path';
 
-const uploadFolder = './laundry-local/';
-
 @Controller('photos')
 export class PhotoController {
+  private readonly uploadFolder;
+
   constructor(
     private readonly galleryService: GalleryService,
     private readonly photoService: PhotoService,
     private readonly thumbnailGenerator: ThumbnailGenerator,
-  ) {}
+  ) {
+    this.uploadFolder = process.env.GOOGLE_UPLOAD_FOLDER;
+  }
 
   @Post()
   @UseInterceptors(
@@ -41,9 +43,15 @@ export class PhotoController {
       storage: new MulterGoogleCloudStorage({
         projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
         bucket: process.env.GOOGLE_STORAGE_BUCKET,
-        keyFilename: path.join(__dirname, '../../../google-credentials.json'),
+        keyFilename: path.join(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          'google-credentials.json',
+        ),
         filename: photoFileName,
-        destination: uploadFolder,
+        destination: process.env.GOOGLE_UPLOAD_FOLDER,
         uniformBucketLevelAccess: true,
       }),
     }),
@@ -53,7 +61,7 @@ export class PhotoController {
     @Body('galleryId') galleryId: number,
     @Res() response: Response,
   ) {
-    await this.thumbnailGenerator.generateThumbnails(photos);
+    await this.thumbnailGenerator.generateThumbnails(photos, this.uploadFolder);
     await this.photoService.saveUploadedPhotos(photos, galleryId);
     response.redirect(`/galleries/${galleryId}/edit`);
   }
@@ -73,7 +81,7 @@ export class PhotoController {
 
   @Get(':photoName')
   getPhoto(@Param('photoName') photo, @Res() res) {
-    const response = res.sendFile(photo, { root: uploadFolder });
+    const response = res.sendFile(photo, { root: process.env.GOOGLE_UPLOAD_FOLDER });
     return {
       status: HttpStatus.OK,
       data: response,
