@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 ENV AP /data/app
 RUN mkdir -p $AP/node_modules && chown -R node:node $AP

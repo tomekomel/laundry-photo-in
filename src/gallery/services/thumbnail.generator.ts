@@ -1,4 +1,5 @@
-const Storage = require('@google-cloud/storage');
+// tslint:disable-next-line:no-var-requires
+const { Storage } = require('@google-cloud/storage');
 
 import { Injectable, Logger } from '@nestjs/common';
 import * as jimp from 'jimp';
@@ -12,6 +13,7 @@ export class ThumbnailGenerator {
   private readonly googleStorage;
 
   constructor() {
+    console.log('Test ', Storage);
     this.googleStorage = new Storage({
       projectId: process.env.GOOGLE_STORAGE_PROJECT_ID,
       keyFilename: join(__dirname, '..', '..', '..', 'google-credentials.json'),

@@ -10,7 +10,12 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "allowSyntheticDefaultImports": true
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
   },
   "exclude": ["node_modules", "dist",
     "src/migrations"
