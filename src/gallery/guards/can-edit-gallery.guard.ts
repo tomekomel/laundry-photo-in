@@ -21,7 +21,8 @@ export class CanEditGalleryGuard implements CanActivate {
     const id = request.params.id;
 
     const gallery: Gallery = await this.galleryRepository
-      .findOne(id, {
+      .findOne({
+        where: { id },
         relations: ['user'],
       })
       .catch((error) => {

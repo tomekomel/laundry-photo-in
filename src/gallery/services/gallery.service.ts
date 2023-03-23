@@ -66,7 +66,8 @@ export class GalleryService {
   }
 
   async findOneById(id: number): Promise<Gallery> {
-    return await this.galleryRepository.findOne(id, {
+    return await this.galleryRepository.findOne({
+      where: { id },
       relations: ['photos', 'user', 'country', 'comments', 'comments.user'],
     });
   }

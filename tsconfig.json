@@ -17,7 +17,5 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
-  "exclude": ["node_modules", "dist",
-    "src/migrations"
-  ]
+  "exclude": ["src/migrations"]
 }

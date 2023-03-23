@@ -1,18 +1,6 @@
 version: "3.7"
 
 services:
-  backend_service:
-    depends_on:
-      - db
-    restart: always
-    build: .
-    ports:
-      - "${APP_PORT}:${APP_PORT}"
-    volumes:
-      - .:/data/app
-      - /data/app/node_modules
-    env_file: .env
-
   db:
     image: mysql:5.7
     container_name: ${DB_HOST}

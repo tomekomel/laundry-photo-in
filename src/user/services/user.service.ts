@@ -24,15 +24,15 @@ export class UserService {
   }
 
   findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOne({ where: { id } });
   }
 
   findOneActiveByName(name: string): Promise<User> {
-    return this.userRepository.findOne({ name, active: true });
+    return this.userRepository.findOne({ where: { name, active: true } });
   }
 
   findOneByName(name: string): Promise<User> {
-    return this.userRepository.findOne({ name });
+    return this.userRepository.findOne({ where: { name } });
   }
 
   async create(userDto: CreateUserDto) {
@@ -66,7 +66,7 @@ export class UserService {
   }
 
   async activate(uuid: string) {
-    const user = await this.userRepository.findOne({ uuid });
+    const user = await this.userRepository.findOne({ where: { uuid } });
     user.activate();
     await this.userRepository.save(user);
   }

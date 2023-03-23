@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
-import * as exphbs from 'express-handlebars';
+import { engine } from 'express-handlebars';
 import * as session from 'express-session';
 import flash = require('connect-flash');
 import * as passport from 'passport';
@@ -21,7 +21,7 @@ async function bootstrap() {
 
   app.engine(
     '.hbs',
-    exphbs({
+    engine({
       extname: '.hbs',
       defaultLayout: 'main',
       helpers: { ...multihelpers },
